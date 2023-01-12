@@ -71,6 +71,19 @@
             <p class="footer__copyright">&copy; 2022 Александр Конашин</p>
         </footer>
 
-        <script src="script.js"></script>
+        <div class="popup popup_opened">
+
+            <form class="form">
+                <button type="button" class="form__close-button">
+                    <img src="./images/close_icon.png" alt="иконка закрытия" class="form__close-icon">
+                </button>
+                <h1 class="form__heading">Редактировать профиль</h1>
+                <input type="text" name="Имя" placeholder="Жак-Ив Кусто" required class="form__item">
+                <input type="text" name="О себе" placeholder="Исследователь океана" required class="form__item">
+                <input type="submit" value="Сохранить" class="form__button">
+            </form>
+
+        </div>    
+
     </body>
 </html>
