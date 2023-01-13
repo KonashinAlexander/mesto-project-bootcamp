@@ -4,6 +4,7 @@
 @import url(../blocks/page/page.css);
 
 @import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
 
 @import url(../blocks/content/content.css);
 
@@ -36,6 +37,6 @@
 @import url(../blocks/form/__close-button/form__close-button.css);
 @import url(../blocks/form/__close-icon/form__close-icon.css);
 
-/* * {
+* {
     outline: 1px solid yellowgreen;
-}  */
+} 

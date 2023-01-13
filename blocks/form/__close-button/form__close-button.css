@@ -6,11 +6,12 @@
     background: transparent;
     border: 0;
     cursor: pointer;
-
+    transition: opacity .3s;
 }
 
 .form__close-button:hover {
     opacity: 0.6;
+    transition: opacity .3s;
 }
 
 @media screen and (max-width: 550px) {
