@@ -9,14 +9,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    display: block;
-    justify-self: center;
-    
-    
-}
-
-.form__item::placeholder {
-    color: black;
+        
 }
 
 @media screen and (max-width: 550px) {

@@ -1,15 +1,12 @@
 .element__like-button {
     background-image: url(../../../images/like-button-disabled.svg);
     background-color: transparent;
-    padding: 0;
     width: 22px;
     height: 19px;
-    position: absolute;
-    right: 20px;
-    bottom: 30px;
     border: 0;
     cursor: pointer;
     transition: opacity .3s;
+    
 }
 
 .element__like-button:hover {

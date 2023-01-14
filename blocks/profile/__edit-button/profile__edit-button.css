@@ -11,7 +11,7 @@
     cursor: pointer;
     position: absolute;
     top: 16px;
-    right: 0;
+    left: 312px;
     transition: opacity .3s;
 }
 
@@ -23,7 +23,7 @@
 @media screen and (max-width: 680px) {
     .profile__edit-button {
         top: 32px;
-        right: 16px;
+        left: 250px;
         width: 20px;
         height: 20px;
     }
