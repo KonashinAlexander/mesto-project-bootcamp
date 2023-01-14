@@ -1,20 +1,15 @@
 .form {
     background-color: white;
     width: 430px;
-    height: 330px;
-    position: absolute;
-    top: 195px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    position: relative;
     border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
     
 }
 
 @media screen and (max-width: 550px) {
     .form {
         width: 282px;
-        height: 322px;
-        top: 123px;
+        
     }
 }
