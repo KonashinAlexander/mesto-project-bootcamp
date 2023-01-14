@@ -1,5 +1,13 @@
 .popup__container {
     margin: 0;
-    position: relative;
+    position: absolute;
     display: flex;
+    top: 195px;
+}
+
+
+@media screen and (max-width: 680px) {
+    .popup__container {
+        top: 123px;
+    }
 }
