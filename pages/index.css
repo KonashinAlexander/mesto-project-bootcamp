@@ -38,6 +38,6 @@
 @import url(../blocks/form/__item/form__item.css);
 @import url(../blocks/form/__button/form__button.css);
 
-/* * {
+* {
     outline: 1px solid yellowgreen;
-}  */
+} 
