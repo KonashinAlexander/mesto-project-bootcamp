@@ -4,9 +4,10 @@
     width: 22px;
     height: 19px;
     border: 0;
+    padding: 0;
     cursor: pointer;
     transition: opacity .3s;
-    
+        
 }
 
 .element__like-button:hover {

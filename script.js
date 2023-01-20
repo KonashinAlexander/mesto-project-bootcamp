@@ -28,17 +28,18 @@ const initialCards = [
     
   ];
 
+const cardGrid = document.querySelector('.elements');  
+
 function loadCards() {
   initialCards.forEach(element => {
     const cardTemplate = document.querySelector('#card').content;
-    const cardGrid = document.querySelector('.elements');
-
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
     cardElement.querySelector('.element__picture').src = element.link;
     cardElement.querySelector('.element__text').textContent = element.name;
 
     cardGrid.prepend(cardElement);
+    
 });
 }
 
@@ -70,8 +71,6 @@ function editProfile(arg) {
     proileTitle.textContent = formElement.querySelector('#line-1').value;
     profileSubtitle.textContent = formElement.querySelector('#line-2').value;
 
-    console.log('жопа!');
-    
     popup.style.visibility='hidden';
   });
 
@@ -84,7 +83,7 @@ function editProfile(arg) {
 
 editButton.addEventListener('click', editProfile);
 
-// 3. клонируем форму, добавляем функцию редактирования грида с картинками //
+// 3. клонируем форму, добавляем функцию добавления новой картинки в конец массива  //
 
 const addButton = document.querySelector('.profile__add-button');
 
@@ -94,18 +93,23 @@ function editPictures(arg) {
   const formTemplate = document.querySelector('#form').content;
   const formElement = formTemplate.querySelector('.popup__container').cloneNode(true);
 
+  popup.append(formElement);
+
   formElement.querySelector('.form__heading').textContent = "Новое место";
   formElement.querySelector('#line-1').value = 'Название';
   formElement.querySelector('#line-2').value = 'Ссылка на картинку';
 
-  popup.append(formElement);
-
-  formElement.addEventListener('submit', function(evt) {
+    formElement.addEventListener('submit', function(evt) {
     evt.preventDefault();
 
-    console.log('жопа_2');
-    initialCards.push({name: formElement.querySelector('#line-1').value, link: formElement.querySelector('#line-2').value});
-    loadCards();
+    const cardTemplate = document.querySelector('#card').content;
+    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+    cardElement.querySelector('.element__picture').src = formElement.querySelector('#line-2').value;
+    cardElement.querySelector('.element__text').textContent = formElement.querySelector('#line-1').value;
+
+    cardGrid.prepend(cardElement);
+    
     
     popup.style.visibility='hidden';
   });
@@ -118,3 +122,16 @@ function editPictures(arg) {
 };
 
 addButton.addEventListener('click', editPictures);
+
+// 4.  добавить кнопку удаления крточки и функцию //
+const deleteButton = document.querySelectorAll('.element__trash-button');
+
+deleteButton.forEach(function (item) {
+  item.addEventListener('click', function() {
+    item.closest('.element').remove();
+    console.log('clicked and removed');
+  })
+  
+})
+
+
