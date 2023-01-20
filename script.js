@@ -28,6 +28,8 @@ const initialCards = [
     
   ];
 
+
+
 const cardGrid = document.querySelector('.elements');  
 
 function loadCards() {
@@ -98,6 +100,8 @@ function editPictures(arg) {
   formElement.querySelector('.form__heading').textContent = "Новое место";
   formElement.querySelector('#line-1').value = 'Название';
   formElement.querySelector('#line-2').value = 'Ссылка на картинку';
+  
+  
 
     formElement.addEventListener('submit', function(evt) {
     evt.preventDefault();
@@ -109,7 +113,7 @@ function editPictures(arg) {
     cardElement.querySelector('.element__text').textContent = formElement.querySelector('#line-1').value;
 
     cardGrid.prepend(cardElement);
-    
+    console.log()
     
     popup.style.visibility='hidden';
   });
@@ -124,14 +128,19 @@ function editPictures(arg) {
 addButton.addEventListener('click', editPictures);
 
 // 4.  добавить кнопку удаления крточки и функцию //
-const deleteButton = document.querySelectorAll('.element__trash-button');
 
-deleteButton.forEach(function (item) {
-  item.addEventListener('click', function() {
-    item.closest('.element').remove();
-    console.log('clicked and removed');
-  })
-  
-})
+function deleteCard() {
+  let deleteButton = document.querySelector('.element__trash-button');
+  deleteButton.closest('.element').remove();
+};
+
+
+// 5. меняем цвет сердечка //
+
+function changeColor() {
+  let likeButton = document.querySelector('.element__like-button');
+  likeButton.style.backgroundColor = 'red';
+  alert('clicked!!!');
+};
 
 

@@ -15,6 +15,6 @@
     transition: opacity .3s;
 }
 
-.element__like-button:focus {
+/* .element__like-button:focus {
     background-image: url(../../../images/like-button-clicked.svg);
-}
+} */
