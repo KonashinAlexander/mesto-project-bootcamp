@@ -143,10 +143,14 @@ function deleteCard(but) {
 
 // 5. меняем цвет сердечка //
 
-function changeColor(heart) {
-  heart.style.backgroundColor = 'red';
-  console.log('heart')
-};
+
+
+function changeColor(evt) {
+ 
+  evt.classList.toggle('element__like-button_color_black');
+}
+
+
 
 // 6. открываем попап и увеличиваем картинку //
 
