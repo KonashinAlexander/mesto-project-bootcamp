@@ -80,8 +80,8 @@ function editProfile() {
   });
 
   function popupClose() {
-        popup.style.visibility='hidden';
-        // document.querySelector('.popup__container').remove();
+    popup.style.visibility='hidden';
+        
   }      
 
   formElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
@@ -136,17 +136,16 @@ addButton.addEventListener('click', editPictures);
 // 4.  добавить кнопку удаления крточки и функцию //
 
 function deleteCard(but) {
-  // let deleteButton = document.querySelector('.element__trash-button');
+  
   but.closest('.element').remove();
 };
 
 
 // 5. меняем цвет сердечка //
 
-function changeColor() {
-  let likeButton = document.querySelector('.element__like-button');
-  likeButton.style.backgroundColor = 'red';
-  alert('clicked!!!');
+function changeColor(heart) {
+  heart.style.backgroundColor = 'red';
+  console.log('heart')
 };
 
 // 6. открываем попап и увеличиваем картинку //
