@@ -2,6 +2,7 @@
     margin: 0;
     position: absolute;
     display: flex;
+    flex-direction: column;
     top: 195px;
 }
 

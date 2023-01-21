@@ -52,7 +52,8 @@ loadCards();
 const popup = document.querySelector('.popup');
 const editButton = document.querySelector('.profile__edit-button');
 
-function editProfile(arg) {
+function editProfile() {
+ 
   popup.style.visibility='visible';
 
   const formTemplate = document.querySelector('#form').content;
@@ -74,11 +75,14 @@ function editProfile(arg) {
     profileSubtitle.textContent = formElement.querySelector('#line-2').value;
 
     popup.style.visibility='hidden';
+  
+    
   });
 
-  function popupClose(arg2) {
+  function popupClose() {
         popup.style.visibility='hidden';
-    }
+        // document.querySelector('.popup__container').remove();
+  }      
 
   formElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
 };
@@ -89,9 +93,9 @@ editButton.addEventListener('click', editProfile);
 
 const addButton = document.querySelector('.profile__add-button');
 
-function editPictures(arg) {
+function editPictures() {
   popup.style.visibility='visible';
-
+  
   const formTemplate = document.querySelector('#form').content;
   const formElement = formTemplate.querySelector('.popup__container').cloneNode(true);
 
@@ -104,22 +108,24 @@ function editPictures(arg) {
   
 
     formElement.addEventListener('submit', function(evt) {
-    evt.preventDefault();
+      evt.preventDefault();
 
-    const cardTemplate = document.querySelector('#card').content;
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+      const cardTemplate = document.querySelector('#card').content;
+      const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
-    cardElement.querySelector('.element__picture').src = formElement.querySelector('#line-2').value;
-    cardElement.querySelector('.element__text').textContent = formElement.querySelector('#line-1').value;
+      cardElement.querySelector('.element__picture').src = formElement.querySelector('#line-2').value;
+      cardElement.querySelector('.element__text').textContent = formElement.querySelector('#line-1').value;
 
-    cardGrid.prepend(cardElement);
-    console.log()
-    
-    popup.style.visibility='hidden';
-  });
+      cardGrid.prepend(cardElement);
+            
+      popup.style.visibility='hidden';
+      document.querySelector('.popup__container').remove();
+      
+    });
 
-  function popupClose(arg2) {
+  function popupClose() {
         popup.style.visibility='hidden';
+        document.querySelector('.popup__container').remove();
     }
 
   formElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
@@ -129,9 +135,9 @@ addButton.addEventListener('click', editPictures);
 
 // 4.  добавить кнопку удаления крточки и функцию //
 
-function deleteCard() {
-  let deleteButton = document.querySelector('.element__trash-button');
-  deleteButton.closest('.element').remove();
+function deleteCard(but) {
+  // let deleteButton = document.querySelector('.element__trash-button');
+  but.closest('.element').remove();
 };
 
 
@@ -142,5 +148,28 @@ function changeColor() {
   likeButton.style.backgroundColor = 'red';
   alert('clicked!!!');
 };
+
+// 6. открываем попап и увеличиваем картинку //
+
+function enchancePicture(card) {
+  popup.style.visibility = 'visible';
+  popup.style.backgroundColor = 'rgba(0 0 0 / 0.9)';
+
+  const pictureTemplate = document.querySelector('#picture').content;
+  const pictureElement = pictureTemplate.querySelector('.popup__container').cloneNode(true);
+
+  pictureElement.querySelector('#image').src = card.src;
+  pictureElement.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
+
+  popup.append(pictureElement);
+
+  function popupClose() {
+    popup.style.visibility='hidden';
+    document.querySelector('.popup__container').remove();
+  }
+
+  pictureElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
+
+}
 
 
