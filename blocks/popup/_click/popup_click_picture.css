@@ -1,0 +1,6 @@
+.popup_click_picture {
+    background-color: rgba(0 0 0 / 0.9);
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
+}

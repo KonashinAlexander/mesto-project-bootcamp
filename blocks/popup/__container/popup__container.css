@@ -1,6 +1,6 @@
 .popup__container {
     margin: 0;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     top: 195px;
