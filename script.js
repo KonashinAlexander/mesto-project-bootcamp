@@ -38,6 +38,7 @@ function loadCards() {
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
     cardElement.querySelector('.element__picture').src = element.link;
+    cardElement.querySelector('.element__picture').alt = element.name;
     cardElement.querySelector('.element__text').textContent = element.name;
 
     cardGrid.prepend(cardElement);
@@ -46,118 +47,86 @@ function loadCards() {
 }
 
 loadCards();
+ 
+// функции открытия и закрытия попап
 
-// объявляем функцию открытия попап + form
+const popupProfile = document.querySelector('#popup_profile');
+const popupCard = document.querySelector('#popup_card');
+const popupPicture = document.querySelector('#popup_picture');
 
-function formOpen() {
-  popup.classList.add('popup_click_button');
+const profileEditButton = document.querySelector('.profile__edit-button');
+const cardAddButton = document.querySelector('.card__add-button');
+const closeButton = document.querySelector('.popup__close-button');
+
+
+profileEditButton.addEventListener('click', function() {
+  popupProfile.classList.add('popup_click_button');
   
-  const formTemplate = document.querySelector('#form').content;
-  const formElement = formTemplate.querySelector('.popup__container').cloneNode(true);
-  return formElement;
-}
+});
 
-// объявляем функцию закрытия попап
 
-function popupClose() {
-  popup.classList.remove('popup_click_picture');
-  popup.classList.remove('popup_click_button');
-  document.querySelector('.popup__container').remove();
-}
 
-// 2. клонируем форму, добавляем функцию редактирования профиля //
+cardAddButton.addEventListener('click', function() {
+  popupCard.classList.add('popup_click_button');
+});
 
-const popup = document.querySelector('.popup');
-const editButton = document.querySelector('.profile__edit-button');
+// функция открытия попап с картинкой из карточки
 
-function editProfile() {
-  
-  const formElement = formOpen();
-  formElement.querySelector('.form__heading').textContent = "Редактировать профиль";
-  formElement.querySelector('#line-1').value = 'Жак-Ив Кусто';
-  formElement.querySelector('#line-2').value = 'Исследователь океана';
-
-  popup.append(formElement);
-
-  formElement.addEventListener('submit', function(evt) {
-    evt.preventDefault();
-
-    let proileTitle = document.querySelector('.profile__title');
-    let profileSubtitle = document.querySelector('.profile__subtitle');
-
-    proileTitle.textContent = formElement.querySelector('#line-1').value;
-    profileSubtitle.textContent = formElement.querySelector('#line-2').value;
-
-    popupClose();
-    
-  });
-
-  formElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
+function enchancePicture(card) {
+  popupPicture.classList.add('popup_click_picture');
+  popupPicture.querySelector('#image').src = card.src;
+  popupPicture.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
 };
 
-editButton.addEventListener('click', editProfile);
+// функция закрытия попап
 
-// 3. клонируем форму, добавляем функцию добавления новой картинки в конец массива  //
+function closePopup() {
+  popupProfile.classList.remove('popup_click_button');
+  popupCard.classList.remove('popup_click_button');
+  popupPicture.classList.remove('popup_click_picture');
+}
 
-const addButton = document.querySelector('.profile__add-button');
 
-function editPictures() {
+// функция редактирования профиля + кнопка Сохранить //
 
-  const formElement = formOpen();
-  formElement.querySelector('.form__heading').textContent = "Новое место";
-  formElement.querySelector('#line-1').value = 'Название';
-  formElement.querySelector('#line-2').value = 'Ссылка на картинку';
+popupProfile.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+
+  let profileTitle = document.querySelector('.profile__title');
+  let profileSubtitle = document.querySelector('.profile__subtitle');
+
+  profileTitle.textContent = popupProfile.querySelector('#line-1').value;
+  profileSubtitle.textContent = popupProfile.querySelector('#line-2').value;
+
+  closePopup();
+});
+
+// // 3. клонируем форму, функция добавления новой картинки в конец массива  //
+
+popupCard.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+
+  const cardTemplate = document.querySelector('#card').content;
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   
-  popup.append(formElement);
+  cardElement.querySelector('.element__picture').src = popupCard.querySelector('#line-2').value;
+  cardElement.querySelector('.element__picture').alt = popupCard.querySelector('#line-1').value;
+  cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-1').value;
 
-  formElement.addEventListener('submit', function(evt) {
-    evt.preventDefault();
+  cardGrid.prepend(cardElement);
+        
+  closePopup();
+  
+});
 
-    const cardTemplate = document.querySelector('#card').content;
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-
-    cardElement.querySelector('.element__picture').src = formElement.querySelector('#line-2').value;
-    cardElement.querySelector('.element__text').textContent = formElement.querySelector('#line-1').value;
-
-    cardGrid.prepend(cardElement);
-          
-    popupClose();
-    
-  });
-
-    formElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
-};
-
-addButton.addEventListener('click', editPictures);
-
-// 4.  добавить кнопку удаления крточки и функцию //
+// // 4. функция кнопки удаления карточки//
 
 function deleteCard(but) {
   but.closest('.element').remove();
 };
 
-
-// 5. меняем цвет сердечка //
+// // 5. функция смены цвета сердечка //
 
 function changeColor(evt) {
   evt.classList.toggle('element__like-button_color_black');
 }
-
-// 6. открываем попап и увеличиваем картинку //
-
-function enchancePicture(card) {
-  popup.classList.add('popup_click_picture');
-  
-  const pictureTemplate = document.querySelector('#picture').content;
-  const pictureElement = pictureTemplate.querySelector('.popup__container').cloneNode(true);
-
-  pictureElement.querySelector('#image').src = card.src;
-  pictureElement.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
-
-  popup.append(pictureElement);
-
-  pictureElement.querySelector('.popup__close-button').addEventListener('click', popupClose);
-
-}
-
-

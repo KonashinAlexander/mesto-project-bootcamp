@@ -2,5 +2,5 @@
     background-color: rgba(0 0 0 / 0.9);
     visibility: visible;
     opacity: 1;
-    transition: visibility 0s, opacity 0.5s linear;
+    transition: all 0.5s linear;
 }
