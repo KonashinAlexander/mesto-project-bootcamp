@@ -109,9 +109,9 @@ popupCard.addEventListener('submit', function(evt) {
   const cardTemplate = document.querySelector('#card').content;
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   
-  cardElement.querySelector('.element__picture').src = popupCard.querySelector('#line-2').value;
-  cardElement.querySelector('.element__picture').alt = popupCard.querySelector('#line-1').value;
-  cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-1').value;
+  cardElement.querySelector('.element__picture').src = popupCard.querySelector('#line-4').value;
+  cardElement.querySelector('.element__picture').alt = popupCard.querySelector('#line-3').value;
+  cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-3').value;
 
   cardGrid.prepend(cardElement);
         
