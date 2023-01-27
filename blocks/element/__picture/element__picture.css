@@ -3,4 +3,8 @@
     height: 282px;
     object-fit: cover;
     cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
 }
