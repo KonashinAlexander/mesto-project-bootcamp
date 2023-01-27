@@ -114,6 +114,11 @@ popupCard.addEventListener('submit', function(evt) {
   cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-3').value;
 
   cardGrid.prepend(cardElement);
+
+  // очищаем содержимое формы ввода after submit
+  popupCard.querySelector('#line-4').value = '';
+  popupCard.querySelector('#line-3').value = '';
+
         
   closePopup();
   
