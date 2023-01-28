@@ -33,11 +33,11 @@
 
                 <template id="card">
                     <article class="element">
-                        <button type="button" class="element__trash-button" onclick="deleteCard(this)"></button>                    
-                        <img src="-" alt="-" class="element__picture" onclick="enchancePicture(this)">
+                        <button type="button" class="element__trash-button"></button>                    
+                        <img src="-" alt="-" class="element__picture">
                         <div class="element__title">
                             <h2 class="element__text">Название</h2>
-                            <button type="button" class="element__like-button element__like-button_color_white" onclick="changeColor(this)"></button>
+                            <button type="button" class="element__like-button element__like-button_color_white"></button>
                             
                         </div>                 
                     </article>
@@ -54,12 +54,12 @@
         <div class="popup" id="popup_profile">
           
             <div class="popup__container">
-                <button type="button" class="popup__close-button" onclick="closePopup()"></button>
+                <button type="button" class="popup__close-button"></button>
                 
                 <form name="form" class="form">
                     <h2 class="form__heading">Редактировать профиль</h2>
-                    <input type="text" name="name" value="Жак-Ив Кусто" required class="form__item" id="line-1">
-                    <input type="text" name="job" value="Исследователь океана" required class="form__item" id="line-2">
+                    <input type="text" name="name" placeholder="Имя" required class="form__item" id="line-1">
+                    <input type="text" name="job" placeholder="О себе" required class="form__item" id="line-2">
                     <button type="submit" value="Сохранить" class="form__button">Сохранить</button>
                 </form>
 
@@ -72,7 +72,7 @@
         <div class="popup" id="popup_card">
           
             <div class="popup__container">
-                <button type="button" class="popup__close-button" onclick="closePopup()"></button>
+                <button type="button" class="popup__close-button"></button>
                 
                 <form name="form" class="form">
                     <h2 class="form__heading">Новое место</h2>
@@ -91,8 +91,8 @@
         <div class="popup" id="popup_picture">
                   
             <div class="popup__container">
-                <button type="button" class="popup__close-button" onclick="closePopup()"></button>
-                <img src="-" alt="-" id="image" class="popup__picture">
+                <button type="button" class="popup__close-button"></button>
+                <img src="http://" alt="-" id="image" class="popup__picture">
                 <p id="text" class="popup__picture-title">text</p>
             </div>
 

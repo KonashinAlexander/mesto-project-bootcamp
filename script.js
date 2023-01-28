@@ -28,7 +28,7 @@ const initialCards = [
     
   ];
 
-
+// 1.1 функция первоначальной загрузки карточек //
 
 const cardGrid = document.querySelector('.elements');  
 
@@ -41,14 +41,21 @@ function loadCards() {
     cardElement.querySelector('.element__picture').alt = element.name;
     cardElement.querySelector('.element__text').textContent = element.name;
 
+    cardElement.querySelector('.element__picture').addEventListener('click', event => {
+      enchancePicture(event.target);
+    });
+
     cardGrid.prepend(cardElement);
     
-});
+  });
 }
 
 loadCards();
+
+// document.addEventListener('click', e => console.log(e.target));
+// document.addEventListener('click', function(){ console.log(this); arguments});
  
-// функции открытия и закрытия попап
+// 2. функции открытия и закрытия попап
 
 const popupProfile = document.querySelector('#popup_profile');
 const popupCard = document.querySelector('#popup_card');
@@ -56,27 +63,36 @@ const popupPicture = document.querySelector('#popup_picture');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const cardAddButton = document.querySelector('.card__add-button');
-const closeButton = document.querySelector('.popup__close-button');
 
 
-profileEditButton.addEventListener('click', function() {
+function openPopupPrifile() {
   popupProfile.classList.add('popup_click_button');
-  
-});
+  popupProfile.querySelector('.popup__close-button').addEventListener('click', event => {
+    closePopup(event.target);
+  });
+}
 
-
-
-cardAddButton.addEventListener('click', function() {
+function openPopupCard() {
   popupCard.classList.add('popup_click_button');
-});
+  popupCard.querySelector('.popup__close-button').addEventListener('click', event => {
+    closePopup(event.target);
+  });
+}
+
+profileEditButton.addEventListener('click', openPopupPrifile);
+cardAddButton.addEventListener('click', openPopupCard);
 
 // функция открытия попап с картинкой из карточки
 
-function enchancePicture(card) {
+function enchancePicture() {
   popupPicture.classList.add('popup_click_picture');
-  popupPicture.querySelector('#image').src = card.src;
+  popupPicture.querySelector('#image').src = card.parentNode.querySelector('.element__picture').src;
   popupPicture.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
+  popupPicture.querySelector('.popup__close-button').addEventListener('click', event => {
+    closePopup(event.target);
+  });
 };
+
 
 // функция закрытия попап
 
@@ -85,7 +101,6 @@ function closePopup() {
   popupCard.classList.remove('popup_click_button');
   popupPicture.classList.remove('popup_click_picture');
 }
-
 
 // функция редактирования профиля + кнопка Сохранить //
 
@@ -113,6 +128,18 @@ popupCard.addEventListener('submit', function(evt) {
   cardElement.querySelector('.element__picture').alt = popupCard.querySelector('#line-3').value;
   cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-3').value;
 
+  cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
+    deleteCard(event.target);
+  });
+
+  cardElement.querySelector('.element__like-button').addEventListener('click', event => {
+    changeColor(event.target)
+  });
+
+  cardElement.querySelector('.element__picture').addEventListener('click', event => {
+    enchancePicture(event.target);
+  });
+
   cardGrid.prepend(cardElement);
 
   // очищаем содержимое формы ввода after submit
@@ -130,8 +157,37 @@ function deleteCard(but) {
   but.closest('.element').remove();
 };
 
-// // 5. функция смены цвета сердечка //
+// 4.1 подключаем функцию к кнопкам карточек первоначальной загрузки
+const trashButtonList = document.querySelectorAll('.element__trash-button');
+
+trashButtonList.forEach(btn => {
+  btn.addEventListener('click', event => {
+    deleteCard(event.target);
+  })
+})
+
+
+// 5. функция смены цвета сердечка //
 
 function changeColor(evt) {
   evt.classList.toggle('element__like-button_color_black');
-}
+};
+
+// 5.1 подключаем функцию смены цвета сердечка к карточкам первоначальной загрузки
+
+const likeButtonList = document.querySelectorAll('.element__like-button');
+
+likeButtonList.forEach(btn => {
+  btn.addEventListener('click', event => {
+    changeColor(event.target);
+  })
+});
+
+
+
+
+
+
+
+
+
