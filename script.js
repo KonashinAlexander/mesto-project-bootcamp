@@ -36,10 +36,18 @@ function loadCards() {
   initialCards.forEach(element => {
     const cardTemplate = document.querySelector('#card').content;
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-
+  
     cardElement.querySelector('.element__picture').src = element.link;
     cardElement.querySelector('.element__picture').alt = element.name;
     cardElement.querySelector('.element__text').textContent = element.name;
+
+    cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
+      deleteCard(event.target);
+    });
+
+    cardElement.querySelector('.element__like-button').addEventListener('click', event => {
+      changeColor(event.target)
+    });
 
     cardElement.querySelector('.element__picture').addEventListener('click', event => {
       enchancePicture(event.target);
@@ -66,14 +74,14 @@ const cardAddButton = document.querySelector('.card__add-button');
 
 
 function openPopupPrifile() {
-  popupProfile.classList.add('popup_click_button');
+  popupProfile.classList.add('popup_opened');
   popupProfile.querySelector('.popup__close-button').addEventListener('click', event => {
     closePopup(event.target);
   });
 }
 
 function openPopupCard() {
-  popupCard.classList.add('popup_click_button');
+  popupCard.classList.add('popup_opened');
   popupCard.querySelector('.popup__close-button').addEventListener('click', event => {
     closePopup(event.target);
   });
@@ -85,7 +93,7 @@ cardAddButton.addEventListener('click', openPopupCard);
 // функция открытия попап с картинкой из карточки
 
 function enchancePicture() {
-  popupPicture.classList.add('popup_click_picture');
+  popupPicture.classList.add('popup_opened');
   popupPicture.querySelector('#image').src = card.parentNode.querySelector('.element__picture').src;
   popupPicture.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
   popupPicture.querySelector('.popup__close-button').addEventListener('click', event => {
@@ -97,9 +105,9 @@ function enchancePicture() {
 // функция закрытия попап
 
 function closePopup() {
-  popupProfile.classList.remove('popup_click_button');
-  popupCard.classList.remove('popup_click_button');
-  popupPicture.classList.remove('popup_click_picture');
+  popupProfile.classList.remove('popup_opened');
+  popupCard.classList.remove('popup_opened');
+  popupPicture.classList.remove('popup_opened');
 }
 
 // функция редактирования профиля + кнопка Сохранить //
@@ -116,7 +124,9 @@ popupProfile.addEventListener('submit', function(evt) {
   closePopup();
 });
 
-// // 3. клонируем форму, функция добавления новой картинки в конец массива  //
+// 3. клонируем форму, функция добавления новой картинки в конец массива  //
+
+
 
 popupCard.addEventListener('submit', function(evt) {
   evt.preventDefault();
@@ -142,6 +152,7 @@ popupCard.addEventListener('submit', function(evt) {
 
   cardGrid.prepend(cardElement);
 
+
   // очищаем содержимое формы ввода after submit
   popupCard.querySelector('#line-4').value = '';
   popupCard.querySelector('#line-3').value = '';
@@ -157,15 +168,6 @@ function deleteCard(but) {
   but.closest('.element').remove();
 };
 
-// 4.1 подключаем функцию к кнопкам карточек первоначальной загрузки
-const trashButtonList = document.querySelectorAll('.element__trash-button');
-
-trashButtonList.forEach(btn => {
-  btn.addEventListener('click', event => {
-    deleteCard(event.target);
-  })
-})
-
 
 // 5. функция смены цвета сердечка //
 
@@ -173,15 +175,7 @@ function changeColor(evt) {
   evt.classList.toggle('element__like-button_color_black');
 };
 
-// 5.1 подключаем функцию смены цвета сердечка к карточкам первоначальной загрузки
 
-const likeButtonList = document.querySelectorAll('.element__like-button');
-
-likeButtonList.forEach(btn => {
-  btn.addEventListener('click', event => {
-    changeColor(event.target);
-  })
-});
 
 
 
