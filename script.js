@@ -112,11 +112,11 @@ function closePopup() {
 
 // функция редактирования профиля + кнопка Сохранить //
 
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
+
 popupProfile.addEventListener('submit', function(evt) {
   evt.preventDefault();
-
-  let profileTitle = document.querySelector('.profile__title');
-  let profileSubtitle = document.querySelector('.profile__subtitle');
 
   profileTitle.textContent = popupProfile.querySelector('#line-1').value;
   profileSubtitle.textContent = popupProfile.querySelector('#line-2').value;
