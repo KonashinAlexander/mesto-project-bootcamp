@@ -32,14 +32,13 @@ const initialCards = [
 
 const cardGrid = document.querySelector('.elements');  
 
-function loadCards() {
-  initialCards.forEach(element => {
-    const cardTemplate = document.querySelector('#card').content;
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+function createCard(cadrName, cardLink) {
+  const cardTemplate = document.querySelector('#card').content;
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   
-    cardElement.querySelector('.element__picture').src = element.link;
-    cardElement.querySelector('.element__picture').alt = element.name;
-    cardElement.querySelector('.element__text').textContent = element.name;
+    cardElement.querySelector('.element__picture').src = cardLink;
+    cardElement.querySelector('.element__picture').alt = cadrName;
+    cardElement.querySelector('.element__text').textContent = cadrName;
 
     cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
       deleteCard(event.target);
@@ -53,8 +52,19 @@ function loadCards() {
       enchancePicture(event.target);
     });
 
-    cardGrid.prepend(cardElement);
-    
+    return cardElement;
+
+    // cardGrid.prepend(cardElement);
+};
+
+function insertCard (card) {
+  cardGrid.prepend(card);
+};
+
+function loadCards() {
+  initialCards.forEach(element => {
+    const card = createCard(element.name, element.link);
+    insertCard(card);     
   });
 }
 
@@ -76,14 +86,14 @@ const cardAddButton = document.querySelector('.card__add-button');
 function openPopupPrifile() {
   popupProfile.classList.add('popup_opened');
   popupProfile.querySelector('.popup__close-button').addEventListener('click', event => {
-    closePopup(event.target);
+    closePopup(popupProfile);
   });
 }
 
 function openPopupCard() {
   popupCard.classList.add('popup_opened');
   popupCard.querySelector('.popup__close-button').addEventListener('click', event => {
-    closePopup(event.target);
+    closePopup(popupCard);
   });
 }
 
@@ -92,22 +102,26 @@ cardAddButton.addEventListener('click', openPopupCard);
 
 // функция открытия попап с картинкой из карточки
 
-function enchancePicture() {
+const bigPicture = popupPicture.querySelector('#image');
+const bigPictureText = popupPicture.querySelector('#text');
+const bigPictureBtn = popupPicture.querySelector('.popup__close-button');
+
+
+function enchancePicture(image) {
   popupPicture.classList.add('popup_opened');
-  popupPicture.querySelector('#image').src = card.parentNode.querySelector('.element__picture').src;
-  popupPicture.querySelector('#text').textContent = card.parentNode.querySelector('.element__text').textContent;
-  popupPicture.querySelector('.popup__close-button').addEventListener('click', event => {
-    closePopup(event.target);
+
+  bigPicture.src = image.src;
+  bigPictureText.textContent = image.alt;
+  bigPictureBtn.addEventListener('click', event => {
+    closePopup(popupPicture);
   });
 };
 
 
 // функция закрытия попап
 
-function closePopup() {
-  popupProfile.classList.remove('popup_opened');
-  popupCard.classList.remove('popup_opened');
-  popupPicture.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 // функция редактирования профиля + кнопка Сохранить //
@@ -115,52 +129,37 @@ function closePopup() {
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-popupProfile.addEventListener('submit', function(evt) {
+
+function submitProfile (evt) {
   evt.preventDefault();
 
   profileTitle.textContent = popupProfile.querySelector('#line-1').value;
   profileSubtitle.textContent = popupProfile.querySelector('#line-2').value;
 
-  closePopup();
-});
+  closePopup(popupProfile);
+}
+
+popupProfile.addEventListener('submit', submitProfile);
 
 // 3. клонируем форму, функция добавления новой картинки в конец массива  //
 
+const pictureName = popupCard.querySelector('#line-3');
+const pictureUrl = popupCard.querySelector('#line-4');
 
-
-popupCard.addEventListener('submit', function(evt) {
+function submitCard (evt) {
+  
   evt.preventDefault();
+  const card = createCard(pictureName.value, pictureUrl.value);
+  insertCard(card);
 
-  const cardTemplate = document.querySelector('#card').content;
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-  
-  cardElement.querySelector('.element__picture').src = popupCard.querySelector('#line-4').value;
-  cardElement.querySelector('.element__picture').alt = popupCard.querySelector('#line-3').value;
-  cardElement.querySelector('.element__text').textContent = popupCard.querySelector('#line-3').value;
-
-  cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
-    deleteCard(event.target);
-  });
-
-  cardElement.querySelector('.element__like-button').addEventListener('click', event => {
-    changeColor(event.target)
-  });
-
-  cardElement.querySelector('.element__picture').addEventListener('click', event => {
-    enchancePicture(event.target);
-  });
-
-  cardGrid.prepend(cardElement);
-
-
-  // очищаем содержимое формы ввода after submit
-  popupCard.querySelector('#line-4').value = '';
-  popupCard.querySelector('#line-3').value = '';
-
+  pictureUrl.value = '';
+  pictureName.value = '';
         
-  closePopup();
-  
-});
+  closePopup(popupCard);  
+
+};
+
+popupCard.addEventListener('submit', submitCard);
 
 // // 4. функция кнопки удаления карточки//
 

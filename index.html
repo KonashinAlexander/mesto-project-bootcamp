@@ -58,9 +58,28 @@
                 
                 <form name="form" class="form">
                     <h2 class="form__heading">Редактировать профиль</h2>
-                    <input type="text" name="name" placeholder="Имя" required class="form__item" id="line-1">
-                    <input type="text" name="job" placeholder="О себе" required class="form__item" id="line-2">
-                    <button type="submit" value="Сохранить" class="form__button">Сохранить</button>
+                    <input type="text" 
+                            name="name" 
+                            placeholder="Имя" 
+                            required 
+                            class="form__item" 
+                            id="line-1"
+                            minlength="2"
+                            maxlength="40">
+
+                    <input type="text" 
+                            name="job" p
+                            placeholder="О себе" 
+                            required 
+                            class="form__item" 
+                            id="line-2"
+                            minlength="2"
+                            maxlength="200">
+
+                    <button type="submit" 
+                            value="Сохранить" 
+                            class="form__button">
+                            Сохранить</button>
                 </form>
 
                 
