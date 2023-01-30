@@ -1,5 +1,5 @@
 .form__item {
-    margin: 0 auto 30px;
+    margin: 15px auto;
     border: 0;
     width: 358px;
     height: 27px;
@@ -9,11 +9,23 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-        
+            
 }
 
-.form__item:invalid {
+.form__item:focus {
+    outline: 0;
+}
+
+/* .form__item:invalid {
     border-bottom: 1px solid #FF0000;
+}
+
+.form__item:valid {
+    border-bottom: 1px solid rgba(0, 0, 0, .3);;
+} */
+
+.form__item_type_error {
+    border-bottom-color: red;
 }
 
 @media screen and (max-width: 550px) {

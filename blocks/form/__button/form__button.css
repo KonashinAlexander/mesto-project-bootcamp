@@ -30,3 +30,10 @@
         line-height: 17px;
     }
 }
+
+.form__button_inactive {
+    background: transparent;
+    border: 1px solid black;
+    color: black;
+    opacity: .2;
+}
