@@ -1,4 +1,4 @@
-import { popupProfile } from "./modal.js";
+import { popupProfile, closePopup } from "./modal.js";
 
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');

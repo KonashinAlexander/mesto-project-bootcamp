@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../pages/index.css"> 
+        <!-- <link rel="stylesheet" href="../src/pages/index.css">  -->
         <title>Mesto</title>
 
     </head>
@@ -11,13 +11,14 @@
     <body class="page">
 
         <header class="header">
-            <img src="../images/logo.svg" alt="лого" class="header__logo">
+            <!-- <img src="./images/logo.svg" alt="лого" class="header__logo"> -->
+            <img src="<%=require('./images/logo.svg')%>" alt="лого" class="header__logo"> 
             <div class="header__line"></div>         
         </header>
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="../images/avatar.svg" alt="картинка Кусто">
+                <img class="profile__avatar" src="<%=require('./images/avatar.svg')%>" alt="картинка Кусто">
                 <div class="profile__info">
                     <h1 class="profile__title">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__edit-button"></button>
@@ -48,7 +49,7 @@
         </main>
 
         <footer class="footer">
-            <p class="footer__copyright">&copy; 2022 Александр Конашин</p>
+            <p class="footer__copyright">&copy; 2023 Александр Конашин</p>
         </footer>
 
         <div class="popup" id="popup_profile">
@@ -141,6 +142,6 @@
 
         </div>   
          
-        <script type="module" src="./index.js"></script>
+        <!-- <script type="module" src="./index.js"></script> -->
     </body>
 </html> 

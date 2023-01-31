@@ -43,9 +43,9 @@ export function closePopup(popup) {
 }
 
 // функция которая закрывает попап кликом мышки
-export function checkPopupOpened (agr1) {
-    if (agr1.classList.contains('popup_opened')) {
-      agr1.classList.remove('popup_opened');
+export function checkPopupOpened (arg1) {
+    if (arg1.classList.contains('popup_opened')) {
+      closePopup(arg1);
     }
 };
   

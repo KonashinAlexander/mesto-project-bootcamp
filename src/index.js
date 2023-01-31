@@ -34,3 +34,9 @@ document.addEventListener('keydown', e => checkEscape(e.key, popupPicture));
 // document.addEventListener('click', function(){ console.log(this); arguments});
 
 // document.querySelector('.popup_opened').addEventListener('click', e => console.log(e.target));
+
+// index.js
+
+import '../src/pages/index.css'; // добавьте импорт главного файла стилей
+
+
