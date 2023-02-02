@@ -3,14 +3,14 @@ const showInputError = (formElement, inputElement, errorMessage) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add('form__item_type_error');
     errorElement.textContent = errorMessage;
-    errorElement.classList.add('form__item-error_active');
+    // errorElement.classList.add('form__error-message');
 };
 
 // Функция, которая удаляет класс с ошибкой
 const hideInputError = (formElement, inputElement) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove('form__item_type_error');
-    errorElement.classList.remove('form__item-error_active');
+    // errorElement.classList.remove('form__error-message');
     errorElement.textContent = '';
 };
 

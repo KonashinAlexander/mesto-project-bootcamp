@@ -1,14 +1,15 @@
 .form__item {
-    margin: 15px auto;
+    margin: 0 auto;
     border: 0;
     width: 358px;
-    height: 27px;
+    min-height: 30px;
     border-bottom: 1px solid rgba(0, 0, 0, .3);
     font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
+    display: block;
             
 }
 
