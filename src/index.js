@@ -4,7 +4,7 @@ loadCards();
 popupCard.addEventListener('submit', submitCard);
 
 // открытие и закрытие попап
-import { popupPicture, popupCard, popupProfile } from './components/modal.js';
+import { popupPicture, popupCard, popupProfile, closePopup } from './components/modal.js';
 import { profileEditButton, cardAddButton } from './components/modal.js';
 import { openPopupPrifile, openPopupCard } from './components/modal.js'
 import { checkEscape, checkPopupOpened } from './components/modal.js'
@@ -14,7 +14,19 @@ cardAddButton.addEventListener('click', openPopupCard);
 
 
 // редкатирование профиля
-import { submitProfile } from './components/profile.js';
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
+
+
+function submitProfile (evt) {
+  evt.preventDefault();
+
+  profileTitle.textContent = popupProfile.querySelector('#input-name').value;
+  profileSubtitle.textContent = popupProfile.querySelector('#input-job').value;
+
+  closePopup(popupProfile);
+}
+
 popupProfile.addEventListener('submit', submitProfile);
 
 
@@ -37,6 +49,6 @@ document.addEventListener('keydown', e => checkEscape(e.key, popupPicture));
 
 // index.js
 
-import '../src/pages/index.css'; // добавьте импорт главного файла стилей
+import '../src/pages/index.css'; // импорт главного файла стилей
 
 

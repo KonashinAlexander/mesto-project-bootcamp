@@ -2,10 +2,11 @@ import { initialCards} from "./constants.js";
 import { enchancePicture, popupCard, closePopup } from "./modal.js";
 
 const cardGrid = document.querySelector('.elements'); 
+const cardTemplate = document.querySelector('#card').content;
 
 // функция создания карточки, навешивание слушателей на кнопки и картинку
 export function createCard(cadrName, cardLink) {
-    const cardTemplate = document.querySelector('#card').content;
+    // const cardTemplate = document.querySelector('#card').content;
     const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
     
       cardElement.querySelector('.element__picture').src = cardLink;
@@ -55,8 +56,8 @@ function changeColor(evt) {
 };
 
 
-const pictureName = popupCard.querySelector('#line-3');
-const pictureUrl = popupCard.querySelector('#line-4');
+const pictureName = popupCard.querySelector('#input-place');
+const pictureUrl = popupCard.querySelector('#input-url');
 
 export function submitCard (evt) {
   
