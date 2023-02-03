@@ -17,7 +17,6 @@ cardAddButton.addEventListener('click', openPopupCard);
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
-
 function submitProfile (evt) {
   evt.preventDefault();
 
@@ -34,8 +33,8 @@ const pictureName = popupCard.querySelector('#input-place');
 const pictureUrl = popupCard.querySelector('#input-url');
 
 function submitCard (evt) {
-  
   evt.preventDefault();
+
   const card = createCard(pictureName.value, pictureUrl.value);
   insertCard(card);
 
@@ -58,13 +57,6 @@ document.addEventListener('keydown', e => checkEscape(e.key, popupProfile));
 document.addEventListener('keydown', e => checkEscape(e.key, popupCard));
 document.addEventListener('keydown', e => checkEscape(e.key, popupPicture));
 
-
-// document.addEventListener('click', e => console.log(e.target));
-// document.addEventListener('click', function(){ console.log(this); arguments});
-
-// document.querySelector('.popup_opened').addEventListener('click', e => console.log(e.target));
-
-// index.js
 
 import '../src/pages/index.css'; // импорт главного файла стилей
 

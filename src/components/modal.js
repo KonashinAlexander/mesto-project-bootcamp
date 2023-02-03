@@ -5,53 +5,58 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
 
+// функция открывает popup
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+// функция закрывает попап
+export function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
+// функция устанавливает слушатель на кнопки закрытия
+const buttonCloseList = document.querySelectorAll('.popup__close-button');
+
+buttonCloseList.forEach(btn => {
+  const popup = btn.closest('.popup');
+  btn.addEventListener('click', () => closePopup(popup)); 
+})
+
 // функция открывает попап редактирования профиля
 export function openPopupPrifile() {
-  popupProfile.classList.add('popup_opened');
-  popupProfile.querySelector('.popup__close-button').addEventListener('click', event => {
-    closePopup(popupProfile);
-  });
+  openPopup(popupProfile);
+  
 }
 
 // функция открывает попап добавления карточки
 export function openPopupCard() {
-  popupCard.classList.add('popup_opened');
-  popupCard.querySelector('.popup__close-button').addEventListener('click', event => {
-    closePopup(popupCard);
-  });
+  openPopup(popupCard);
 }
 
-
+// функция открывает попап с большой картинкой
 const bigPicture = popupPicture.querySelector('#image');
 const bigPictureText = popupPicture.querySelector('#text');
-const bigPictureBtn = popupPicture.querySelector('.popup__close-button');
 
-// функция открывает попап с большой картинкой
 export function enchancePicture(image) {
-  popupPicture.classList.add('popup_opened');
+  openPopup(popupPicture);
   popupPicture.style.backgroundColor = 'rgba(0 0 0 / 0.9)';
   bigPicture.src = image.src;
   bigPictureText.textContent = image.alt;
-  bigPictureBtn.addEventListener('click', event => {
-    closePopup(popupPicture);
-  });
 };
 
-// функция закрывает попап
-export function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-}
 
 // функция которая закрывает попап кликом мышки
-export function checkPopupOpened (arg1) {
-    if (arg1.classList.contains('popup_opened')) {
-      closePopup(arg1);
+export function checkPopupOpened (popupArea) {
+    if (popupArea.classList.contains('popup_opened')) {
+      closePopup(popupArea);
     }
 };
   
 // функция которая закрывает попап нажатием Esc
-export function checkEscape (arg2, popup) {
-    if (arg2 === 'Escape') {
+export function checkEscape (buttonKey, popup) {
+    if (buttonKey === 'Escape') {
         closePopup(popup)
     }
 }
+
