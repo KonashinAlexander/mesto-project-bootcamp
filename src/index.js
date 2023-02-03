@@ -53,7 +53,18 @@ function submitCard (evt) {
 
 // валидация всех полей всех форм
 import { enableValidation } from './components/validate.js';
-enableValidation(); 
+// enableValidation(); 
+
+// включение валидации вызовом enableValidation
+
+enableValidation({
+  formSelector: '.form',                          
+  inputSelector: '.form__item',                   
+  submitButtonSelector: '.form__button', 
+  inactiveButtonClass: 'form__button_inactive', 
+  inputErrorClass: 'form__item_type_error', 
+  // errorClass: 'popup__error_visible'
+});
 
 
 // закрытие попап нажатием мышки и кнопки Esc
