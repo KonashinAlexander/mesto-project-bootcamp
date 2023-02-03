@@ -1,5 +1,5 @@
 // первоначальная загрузка 6 карточек и добавление карточек
-import { loadCards } from "./components/card.js";
+import { loadCards, createCard, insertCard } from "./components/card.js";
 loadCards();
 popupCard.addEventListener('submit', submitCard);
 
@@ -16,14 +16,19 @@ cardAddButton.addEventListener('click', openPopupCard);
 // редкатирование профиля
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
+const profileInputName = document.querySelector('#input-name');
+const profileInputJob = document.querySelector('#input-job');
+
 
 function submitProfile (evt) {
   evt.preventDefault();
-
-  profileTitle.textContent = popupProfile.querySelector('#input-name').value;
-  profileSubtitle.textContent = popupProfile.querySelector('#input-job').value;
-
+  profileTitle.textContent = profileInputName.value;
+  profileSubtitle.textContent = profileInputJob.value;
+  
   closePopup(popupProfile);
+
+  profileInputName.value = '';
+  profileInputJob.value = '';
 }
 
 popupProfile.addEventListener('submit', submitProfile);

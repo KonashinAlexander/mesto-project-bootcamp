@@ -40,9 +40,9 @@ const bigPictureText = popupPicture.querySelector('#text');
 
 export function enchancePicture(image) {
   openPopup(popupPicture);
-  popupPicture.style.backgroundColor = 'rgba(0 0 0 / 0.9)';
   bigPicture.src = image.src;
   bigPictureText.textContent = image.alt;
+  bigPicture.alt = image.alt;
 };
 
 
