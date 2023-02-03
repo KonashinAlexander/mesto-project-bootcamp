@@ -4,28 +4,31 @@ import { enchancePicture, popupCard, closePopup } from "./modal.js";
 const cardGrid = document.querySelector('.elements'); 
 const cardTemplate = document.querySelector('#card').content;
 
+
 // функция создания карточки, навешивание слушателей на кнопки и картинку
 export function createCard(cadrName, cardLink) {
-    // const cardTemplate = document.querySelector('#card').content;
-    const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-    
-      cardElement.querySelector('.element__picture').src = cardLink;
-      cardElement.querySelector('.element__picture').alt = cadrName;
-      cardElement.querySelector('.element__text').textContent = cadrName;
   
-      cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
-        deleteCard(event.target);
-      });
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  const cardPicture = cardElement.querySelector('.element__picture');
+  const cardText = cardElement.querySelector('.element__text');
   
-      cardElement.querySelector('.element__like-button').addEventListener('click', event => {
-        changeColor(event.target)
-      });
-  
-      cardElement.querySelector('.element__picture').addEventListener('click', event => {
-        enchancePicture(event.target);
-      });
-  
-      return cardElement;
+  cardPicture.src = cardLink;
+  cardPicture.alt = cadrName;
+  cardText.textContent = cadrName;
+
+  cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
+    deleteCard(event.target);
+  });
+
+  cardElement.querySelector('.element__like-button').addEventListener('click', event => {
+    changeColor(event.target)
+  });
+
+  cardElement.querySelector('.element__picture').addEventListener('click', event => {
+    enchancePicture(event.target);
+  });
+
+  return cardElement;
   
 };
 
@@ -56,18 +59,3 @@ function changeColor(evt) {
 };
 
 
-const pictureName = popupCard.querySelector('#input-place');
-const pictureUrl = popupCard.querySelector('#input-url');
-
-export function submitCard (evt) {
-  
-  evt.preventDefault();
-  const card = createCard(pictureName.value, pictureUrl.value);
-  insertCard(card);
-
-  pictureUrl.value = '';
-  pictureName.value = '';
-        
-  closePopup(popupCard);  
-
-};

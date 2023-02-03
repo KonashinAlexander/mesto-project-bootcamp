@@ -1,5 +1,5 @@
 // первоначальная загрузка 6 карточек и добавление карточек
-import { loadCards, submitCard } from "./components/card.js";
+import { loadCards } from "./components/card.js";
 loadCards();
 popupCard.addEventListener('submit', submitCard);
 
@@ -28,6 +28,23 @@ function submitProfile (evt) {
 }
 
 popupProfile.addEventListener('submit', submitProfile);
+
+// функция submit карточки при добавлении
+const pictureName = popupCard.querySelector('#input-place');
+const pictureUrl = popupCard.querySelector('#input-url');
+
+function submitCard (evt) {
+  
+  evt.preventDefault();
+  const card = createCard(pictureName.value, pictureUrl.value);
+  insertCard(card);
+
+  pictureUrl.value = '';
+  pictureName.value = '';
+        
+  closePopup(popupCard);  
+
+};
 
 
 // валидация всех полей всех форм
