@@ -1,5 +1,5 @@
 import { initialCards} from "./constants.js";
-import { enchancePicture } from "./modal.js";
+import { enchancePicture } from "../index.js";
 
 
 const cardGrid = document.querySelector('.elements'); 

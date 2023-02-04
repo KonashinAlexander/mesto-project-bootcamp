@@ -1,20 +1,31 @@
 // первоначальная загрузка 6 карточек и добавление карточек
 import { loadCards, createCard, insertCard } from "./components/card.js";
-loadCards();
-
-// открытие и закрытие попап
-// const popupProfile = document.querySelector('#popup_profile');
-// const popupCard = document.querySelector('#popup_card');
-// const popupPicture = document.querySelector('#popup_picture');
-// const profileEditButton = document.querySelector('.profile__edit-button');
-// const cardAddButton = document.querySelector('.card__add-button');
-
-
-import { closePopup, popupPicture, popupCard, popupProfile } from './components/modal.js';
-import { profileEditButton, cardAddButton } from './components/modal.js';
+import { openPopup, closePopup } from './components/modal.js';
 import { openPopupProfile, openPopupCard } from './components/modal.js'
 import { checkEscape, checkPopupOpened } from './components/modal.js'
 
+// объявляем переменные
+export const popupProfile = document.querySelector('#popup_profile');
+export const popupCard = document.querySelector('#popup_card');
+export const popupPicture = document.querySelector('#popup_picture');
+export const profileEditButton = document.querySelector('.profile__edit-button');
+export const cardAddButton = document.querySelector('.card__add-button');
+
+// функция первоначально загружает 6 карточек
+loadCards();
+
+// функция открывает попап с большой картинкой
+const bigPicture = popupPicture.querySelector('#image');
+const bigPictureText = popupPicture.querySelector('#text');
+
+export function enchancePicture(image) {
+  openPopup(popupPicture);
+  bigPicture.src = image.src;
+  bigPictureText.textContent = image.alt;
+  bigPicture.alt = image.alt;
+};
+
+// ве
 profileEditButton.addEventListener('click', openPopupProfile);
 cardAddButton.addEventListener('click', openPopupCard);
 popupCard.addEventListener('submit', submitCard);
