@@ -1,23 +1,30 @@
 // первоначальная загрузка 6 карточек и добавление карточек
 import { loadCards, createCard, insertCard } from "./components/card.js";
 loadCards();
-popupCard.addEventListener('submit', submitCard);
 
 // открытие и закрытие попап
-import { popupPicture, popupCard, popupProfile, closePopup } from './components/modal.js';
+// const popupProfile = document.querySelector('#popup_profile');
+// const popupCard = document.querySelector('#popup_card');
+// const popupPicture = document.querySelector('#popup_picture');
+// const profileEditButton = document.querySelector('.profile__edit-button');
+// const cardAddButton = document.querySelector('.card__add-button');
+
+
+import { closePopup, popupPicture, popupCard, popupProfile } from './components/modal.js';
 import { profileEditButton, cardAddButton } from './components/modal.js';
-import { openPopupPrifile, openPopupCard } from './components/modal.js'
+import { openPopupProfile, openPopupCard } from './components/modal.js'
 import { checkEscape, checkPopupOpened } from './components/modal.js'
 
-profileEditButton.addEventListener('click', openPopupPrifile);
+profileEditButton.addEventListener('click', openPopupProfile);
 cardAddButton.addEventListener('click', openPopupCard);
-
+popupCard.addEventListener('submit', submitCard);
 
 // редкатирование профиля
+const profileForm = document.forms.formProfile;
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const profileInputName = document.querySelector('#input-name');
-const profileInputJob = document.querySelector('#input-job');
+const profileInputName = profileForm.querySelector('#input-name');
+const profileInputJob = profileForm.querySelector('#input-job');
 
 
 function submitProfile (evt) {
@@ -29,9 +36,18 @@ function submitProfile (evt) {
 
   profileInputName.value = '';
   profileInputJob.value = '';
+
+  enableValidation({
+    formSelector: '.form',                          
+    inputSelector: '.form__item',                   
+    submitButtonSelector: '.form__button', 
+    inactiveButtonClass: 'form__button_inactive', 
+    inputErrorClass: 'form__item_type_error', 
+    // errorClass: 'popup__error_visible'
+  });
 }
 
-popupProfile.addEventListener('submit', submitProfile);
+profileForm.addEventListener('submit', submitProfile);
 
 // функция submit карточки при добавлении
 const pictureName = popupCard.querySelector('#input-place');
@@ -47,13 +63,21 @@ function submitCard (evt) {
   pictureName.value = '';
         
   closePopup(popupCard);  
-
+  
+  enableValidation({
+    formSelector: '.form',                          
+    inputSelector: '.form__item',                   
+    submitButtonSelector: '.form__button', 
+    inactiveButtonClass: 'form__button_inactive', 
+    inputErrorClass: 'form__item_type_error', 
+    // errorClass: 'popup__error_visible'
+  });
+  
 };
 
 
 // валидация всех полей всех форм
 import { enableValidation } from './components/validate.js';
-// enableValidation(); 
 
 // включение валидации вызовом enableValidation
 

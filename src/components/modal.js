@@ -5,6 +5,8 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
 
+
+
 // функция открывает popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -24,9 +26,9 @@ buttonCloseList.forEach(btn => {
 })
 
 // функция открывает попап редактирования профиля
-export function openPopupPrifile() {
+export function openPopupProfile() {
   openPopup(popupProfile);
-  
+
 }
 
 // функция открывает попап добавления карточки
@@ -35,6 +37,7 @@ export function openPopupCard() {
 }
 
 // функция открывает попап с большой картинкой
+// import { popupPicture } from "../index.js";
 const bigPicture = popupPicture.querySelector('#image');
 const bigPictureText = popupPicture.querySelector('#text');
 

@@ -1,5 +1,6 @@
 import { initialCards} from "./constants.js";
-import { enchancePicture, popupCard, closePopup } from "./modal.js";
+import { enchancePicture } from "./modal.js";
+
 
 const cardGrid = document.querySelector('.elements'); 
 const cardTemplate = document.querySelector('#card').content;
