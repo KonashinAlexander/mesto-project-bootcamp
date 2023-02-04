@@ -19,6 +19,7 @@ const bigPictureText = popupPicture.querySelector('#text');
 
 export function enchancePicture(image) {
   openPopup(popupPicture);
+  popupPicture.classList.add('popup_opened-picture');
   bigPicture.src = image.src;
   bigPictureText.textContent = image.alt;
   bigPicture.alt = image.alt;
@@ -35,6 +36,8 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const profileInputName = profileForm.querySelector('#input-name');
 const profileInputJob = profileForm.querySelector('#input-job');
 
+profileInputName.value = profileTitle.textContent;
+profileInputJob.value = profileSubtitle.textContent;
 
 function submitProfile (evt) {
   evt.preventDefault();
@@ -43,8 +46,8 @@ function submitProfile (evt) {
   
   closePopup(popupProfile);
 
-  profileInputName.value = '';
-  profileInputJob.value = '';
+  // profileInputName.value = '';
+  // profileInputJob.value = '';
 
   enableValidation({
     formSelector: '.form',                          

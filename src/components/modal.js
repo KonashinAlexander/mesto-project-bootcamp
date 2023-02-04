@@ -8,6 +8,7 @@ export function openPopup(popup) {
 // функция закрывает попап
 export function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  popup.classList.remove('popup_opened-picture');
   document.removeEventListener('keydown', closeByEsc)
 }
 

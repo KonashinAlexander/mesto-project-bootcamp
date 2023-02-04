@@ -17,6 +17,7 @@
         </header>
 
         <main class="content">
+
             <section class="profile">
                 <img class="profile__avatar" src="<%=require('./images/avatar.svg')%>" alt="картинка Кусто">
                 <div class="profile__info">
@@ -30,9 +31,7 @@
                         aria-label="Добавить"></button>
             </section>
 
-            <div class="elements">
-
-                
+            <div class="elements">                
 
                 <template id="card">
                     <article class="element">
@@ -44,8 +43,7 @@
                             
                         </div>                 
                     </article>
-                </template>
-                
+                </template>    
                 
             </div>
         </main>
@@ -63,7 +61,7 @@
                     <h2 class="form__heading">Редактировать профиль</h2>
                     <input type="text" 
                             name="name" 
-                            placeholder="Имя" 
+                            placeholder="Имя"
                             required 
                             class="form__item" 
                             id="input-name"
@@ -73,7 +71,7 @@
 
                     <input type="text" 
                             name="job"
-                            placeholder="О себе" 
+                            placeholder="О себе"
                             required 
                             class="form__item" 
                             id="input-job"
