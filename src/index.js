@@ -1,8 +1,7 @@
 // первоначальная загрузка 6 карточек и добавление карточек
 import { loadCards, createCard, insertCard } from "./components/card.js";
 import { openPopup, closePopup } from './components/modal.js';
-import { openPopupProfile, openPopupCard } from './components/modal.js'
-import { checkEscape, checkPopupOpened } from './components/modal.js'
+import { checkPopupOpened } from './components/modal.js'
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
@@ -25,10 +24,9 @@ export function enchancePicture(image) {
   bigPicture.alt = image.alt;
 };
 
-// ве
-profileEditButton.addEventListener('click', openPopupProfile);
-cardAddButton.addEventListener('click', openPopupCard);
-popupCard.addEventListener('submit', submitCard);
+// навешивем слушатели открытия попап на кнопки
+profileEditButton.addEventListener('click', e => openPopup(popupProfile));
+cardAddButton.addEventListener('click', e => openPopup(popupCard));
 
 // редкатирование профиля
 const profileForm = document.forms.formProfile;
@@ -61,8 +59,9 @@ function submitProfile (evt) {
 profileForm.addEventListener('submit', submitProfile);
 
 // функция submit карточки при добавлении
-const pictureName = popupCard.querySelector('#input-place');
-const pictureUrl = popupCard.querySelector('#input-url');
+const cardForm = document.forms.formCard;
+const pictureName = cardForm.querySelector('#input-place');
+const pictureUrl = cardForm.querySelector('#input-url');
 
 function submitCard (evt) {
   evt.preventDefault();
@@ -86,6 +85,8 @@ function submitCard (evt) {
   
 };
 
+cardForm.addEventListener('submit', submitCard);
+
 
 // валидация всех полей всех форм
 import { enableValidation } from './components/validate.js';
@@ -102,11 +103,10 @@ enableValidation({
 });
 
 
-// закрытие попап нажатием мышки и кнопки Esc
-document.addEventListener('click', e => checkPopupOpened(e.target));
-document.addEventListener('keydown', e => checkEscape(e.key, popupProfile));
-document.addEventListener('keydown', e => checkEscape(e.key, popupCard));
-document.addEventListener('keydown', e => checkEscape(e.key, popupPicture));
+// закрытие попап нажатием мышки
+popupCard.addEventListener('click', e => checkPopupOpened(e.target));
+popupProfile.addEventListener('click', e => checkPopupOpened(e.target));
+popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
 
 
 import '../src/pages/index.css'; // импорт главного файла стилей
