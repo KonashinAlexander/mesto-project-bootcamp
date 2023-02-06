@@ -115,3 +115,34 @@ popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
 import '../src/pages/index.css'; // импорт главного файла стилей
 
 
+// запрос на загрузку картинок с сервера
+
+
+
+
+fetch('https://nomoreparties.co/v1/wbf-cohort-5/cards', {
+  headers: {
+    authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// запрос данных о пользователе
+fetch('https://nomoreparties.co/v1/wbf-cohort-5/users/me', {
+  headers: {
+    authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
+  }
+})
+.then(res => res.json())
+.then((result) => {
+  console.log(result);
+})
+.catch((err) => {
+  console.log(err);
+});
