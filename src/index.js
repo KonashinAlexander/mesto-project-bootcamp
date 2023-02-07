@@ -1,4 +1,4 @@
-// первоначальная загрузка 6 карточек и добавление карточек
+
 import { loadCards, createCard, insertCard } from "./components/card.js";
 import { openPopup, closePopup } from './components/modal.js';
 import { checkPopupOpened } from './components/modal.js'
@@ -11,7 +11,7 @@ export const profileEditButton = document.querySelector('.profile__edit-button')
 export const cardAddButton = document.querySelector('.card__add-button');
 
 // функция первоначально загружает 6 карточек
-loadCards();
+// loadCards();
 
 // функция открывает попап с большой картинкой
 const bigPicture = popupPicture.querySelector('#image');
@@ -115,34 +115,42 @@ popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
 import '../src/pages/index.css'; // импорт главного файла стилей
 
 
-// запрос на загрузку картинок с сервера
+
+
+// функция запроса на загрузку картинок с сервера и отрисовку на странице
+
+import {config} from './components/api.js';
+
+export const initialCards = []
+function getCards () {
+  fetch(config.url, {headers: config.headers})
+  .then(data => data.json())
+  .then(list => {    
+    list.forEach(card => {initialCards.push(card)})
+    loadCards()
+  }) 
+  .catch(err => console.error(err))
+}
+
+getCards()
 
 
 
+ 
 
-fetch('https://nomoreparties.co/v1/wbf-cohort-5/cards', {
-  headers: {
-    authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+
 
 // запрос данных о пользователе
-fetch('https://nomoreparties.co/v1/wbf-cohort-5/users/me', {
-  headers: {
-    authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
-  }
-})
-.then(res => res.json())
-.then((result) => {
-  console.log(result);
-})
-.catch((err) => {
-  console.log(err);
-});
+// fetch('https://nomoreparties.co/v1/wbf-cohort-5/users/me', {
+//   headers: {
+//     authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
+//   }
+// })
+// .then(res => res.json())
+// .then((result) => {
+//   console.log(result);
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+

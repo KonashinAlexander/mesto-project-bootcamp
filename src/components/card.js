@@ -1,5 +1,6 @@
-import { initialCards} from "./constants.js";
-import { enchancePicture } from "../index.js";
+// import { initialCards} from "./constants.js";
+import { enchancePicture, initialCards } from "../index.js";
+
 
 
 const cardGrid = document.querySelector('.elements'); 
