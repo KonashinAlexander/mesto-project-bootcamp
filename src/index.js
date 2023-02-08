@@ -75,6 +75,7 @@ function submitCard (evt) {
 
   const card = createCard(pictureName.value, pictureUrl.value);
   insertCard(card);
+  addCardToServer(pictureName.value, pictureUrl.value);
 
   pictureUrl.value = '';
   pictureName.value = '';
@@ -168,4 +169,16 @@ function getProfile () {
 // getProfile()
 
  
+// функция добавления карточки на сервер
+function addCardToServer(cardName, cardLink) {
+  fetch(`${config.url}/cards`, {
+  method: 'POST',
+  headers: config.headers,
+  body: JSON.stringify({
+    name: `${cardName}`,
+    link: `${cardLink}`
+  })
+});
+}
 
+   
