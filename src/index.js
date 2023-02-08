@@ -42,8 +42,11 @@ profileInputJob.value = profileSubtitle.textContent;
 
 function submitProfile (evt) {
   evt.preventDefault();
-  profileTitle.textContent = profileInputName.value;
-  profileSubtitle.textContent = profileInputJob.value;
+  updateProfile(profileInputName.value, profileInputJob.value);
+  getProfile()
+
+  // profileTitle.textContent = profileInputName.value;
+  // profileSubtitle.textContent = profileInputJob.value;
   
   closePopup(popupProfile);
   
@@ -137,17 +140,17 @@ getCards()
 
 
 // функция обновления профиля пользователя на сервере
-function updateProfile() {
+function updateProfile(profileName, profileAbout) {
   fetch(`${config.url}/users/me`, {
   method: 'PATCH',
   headers: config.headers,
   body: JSON.stringify({
-    name: 'Yury Gagarin',
-    about: 'The first cosmonaut'
+    name: profileName,
+    about: profileAbout
   })
 });
 }
-updateProfile()
+// updateProfile()
 
 // функция получения данных профиля пользователя
 function getProfile () {
@@ -162,7 +165,7 @@ function getProfile () {
   .catch(err => console.error(err))
 }
 
-getProfile()
+// getProfile()
 
  
 
