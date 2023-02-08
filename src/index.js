@@ -33,6 +33,7 @@ cardAddButton.addEventListener('click', e => openPopup(popupCard));
 const profileForm = document.forms.formProfile;
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
+const profileAvatar = document.querySelector('.profile__avatar');
 const profileInputName = profileForm.querySelector('#input-name');
 const profileInputJob = profileForm.querySelector('#input-job');
 
@@ -45,7 +46,7 @@ function submitProfile (evt) {
   profileSubtitle.textContent = profileInputJob.value;
   
   closePopup(popupProfile);
-
+  
   // profileInputName.value = '';
   // profileInputJob.value = '';
 
@@ -123,7 +124,7 @@ import {config} from './components/api.js';
 
 export const initialCards = []
 function getCards () {
-  fetch(config.url, {headers: config.headers})
+  fetch(`${config.url}/cards`, {headers: config.headers})
   .then(data => data.json())
   .then(list => {    
     list.forEach(card => {initialCards.push(card)})
@@ -135,22 +136,33 @@ function getCards () {
 getCards()
 
 
+// функция обновления профиля пользователя на сервере
+function updateProfile() {
+  fetch(`${config.url}/users/me`, {
+  method: 'PATCH',
+  headers: config.headers,
+  body: JSON.stringify({
+    name: 'Yury Gagarin',
+    about: 'The first cosmonaut'
+  })
+});
+}
+updateProfile()
+
+// функция получения данных профиля пользователя
+function getProfile () {
+  fetch(`${config.url}/users/me`, {headers: config.headers})
+  .then(data => data.json())
+  .then(profile => {    
+    profileTitle.textContent = profile.name;
+    profileSubtitle.textContent = profile.about;
+    profileAvatar.src = profile.avatar;
+    profileAvatar.alt = profile.name; 
+  }) 
+  .catch(err => console.error(err))
+}
+
+getProfile()
 
  
-
-
-
-// запрос данных о пользователе
-// fetch('https://nomoreparties.co/v1/wbf-cohort-5/users/me', {
-//   headers: {
-//     authorization: 'eb2b4170-c32c-4a27-a66a-d0de0ec94cc6'
-//   }
-// })
-// .then(res => res.json())
-// .then((result) => {
-//   console.log(result);
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
 
