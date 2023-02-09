@@ -18,6 +18,8 @@
 
         <main class="content">
 
+
+            <!-- профиль -->
             <section class="profile">
                 <img class="profile__avatar" src="<%=require('./images/avatar.svg')%>" alt="картинка Кусто">
                 <div class="profile__info">
@@ -31,16 +33,20 @@
                         aria-label="Добавить"></button>
             </section>
 
+            <!-- грид для добавления карточек -->
             <div class="elements">                
 
+                <!-- template для создания новой карточки -->
                 <template id="card">
                     <article class="element">
                         <button type="button" class="element__trash-button"></button>                    
                         <img src="-" alt="-" class="element__picture">
                         <div class="element__title">
                             <h2 class="element__text">Название</h2>
-                            <button type="button" class="element__like-button element__like-button_color_white"></button>
-                            
+                            <div class="element__likes">
+                                <button type="button" class="element__like-button element__like-button_color_white"></button>
+                                <span class="element__likes-number"></span>
+                            </div>                            
                         </div>                 
                     </article>
                 </template>    
@@ -52,6 +58,7 @@
             <p class="footer__copyright">&copy; 2023 Александр Конашин</p>
         </footer>
 
+        <!-- попап для редактирования профиля -->
         <div class="popup" id="popup_profile">
           
             <div class="popup__container">
@@ -92,6 +99,7 @@
 
         </div>   
 
+        <!-- попап для добаления новой карточки места -->
         <div class="popup" id="popup_card">
           
             <div class="popup__container">
@@ -132,6 +140,7 @@
         </div>   
        
     
+        <!-- попап для открытия большой картинки -->
         <div class="popup" id="popup_picture">
                   
             <div class="popup__container">

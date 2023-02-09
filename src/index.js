@@ -10,8 +10,46 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
 
-// функция первоначально загружает 6 карточек
-// loadCards();
+// функция получения данных профиля
+
+export let profileId ='';
+
+function getProfile () {
+  fetch(`${config.url}/users/me`, {headers: config.headers})
+  .then(data => data.json())
+  .then(profile => {    
+    profileTitle.textContent = profile.name;
+    profileSubtitle.textContent = profile.about;
+    profileAvatar.src = profile.avatar;
+    profileAvatar.alt = profile.name; 
+    return profileId = profile._id; // запишем id моего профиля
+    
+  })
+  .catch(err => console.error(err))
+  
+};
+
+getProfile()
+
+// функция запроса на загрузку картинок с сервера и отрисовку на странице
+
+import {config} from './components/api.js';
+
+export const initialCards = []
+function getCards () {
+  return fetch(`${config.url}/cards`, {headers: config.headers})
+  .then(data => data.json())
+  .then(list => {
+    list.forEach(card => {
+        initialCards.push(card)
+    })    
+    loadCards()
+  }) 
+  .catch(err => console.error(err))
+}
+
+getCards()
+
 
 // функция открывает попап с большой картинкой
 const bigPicture = popupPicture.querySelector('#image');
@@ -43,11 +81,7 @@ profileInputJob.value = profileSubtitle.textContent;
 function submitProfile (evt) {
   evt.preventDefault();
   updateProfile(profileInputName.value, profileInputJob.value);
-  getProfile()
-
-  // profileTitle.textContent = profileInputName.value;
-  // profileSubtitle.textContent = profileInputJob.value;
-  
+  getProfile();  
   closePopup(popupProfile);
   
   // profileInputName.value = '';
@@ -59,7 +93,7 @@ function submitProfile (evt) {
     submitButtonSelector: '.form__button', 
     inactiveButtonClass: 'form__button_inactive', 
     inputErrorClass: 'form__item_type_error', 
-    // errorClass: 'popup__error_visible'
+    
   });
 }
 
@@ -73,10 +107,11 @@ const pictureUrl = cardForm.querySelector('#input-url');
 function submitCard (evt) {
   evt.preventDefault();
 
-  const card = createCard(pictureName.value, pictureUrl.value);
-  insertCard(card);
+  const likes = []
+  // const card = createCard(pictureName.value, pictureUrl.value, likes);
+  // insertCard(card);
   addCardToServer(pictureName.value, pictureUrl.value);
-
+  
   pictureUrl.value = '';
   pictureName.value = '';
         
@@ -88,7 +123,7 @@ function submitCard (evt) {
     submitButtonSelector: '.form__button', 
     inactiveButtonClass: 'form__button_inactive', 
     inputErrorClass: 'form__item_type_error', 
-    // errorClass: 'popup__error_visible'
+    
   });
   
 };
@@ -107,7 +142,7 @@ enableValidation({
   submitButtonSelector: '.form__button', 
   inactiveButtonClass: 'form__button_inactive', 
   inputErrorClass: 'form__item_type_error', 
-  // errorClass: 'popup__error_visible'
+  
 });
 
 
@@ -122,23 +157,6 @@ import '../src/pages/index.css'; // импорт главного файла с�
 
 
 
-// функция запроса на загрузку картинок с сервера и отрисовку на странице
-
-import {config} from './components/api.js';
-
-export const initialCards = []
-function getCards () {
-  fetch(`${config.url}/cards`, {headers: config.headers})
-  .then(data => data.json())
-  .then(list => {    
-    list.forEach(card => {initialCards.push(card)})
-    loadCards()
-  }) 
-  .catch(err => console.error(err))
-}
-
-getCards()
-
 
 // функция обновления профиля пользователя на сервере
 function updateProfile(profileName, profileAbout) {
@@ -146,33 +164,19 @@ function updateProfile(profileName, profileAbout) {
   method: 'PATCH',
   headers: config.headers,
   body: JSON.stringify({
-    name: profileName,
+    name: profileName, 
     about: profileAbout
+    })
   })
-});
-}
+  
+};
+
 // updateProfile()
 
-// функция получения данных профиля пользователя
-function getProfile () {
-  fetch(`${config.url}/users/me`, {headers: config.headers})
-  .then(data => data.json())
-  .then(profile => {    
-    profileTitle.textContent = profile.name;
-    profileSubtitle.textContent = profile.about;
-    profileAvatar.src = profile.avatar;
-    profileAvatar.alt = profile.name; 
-  }) 
-  .catch(err => console.error(err))
-}
-
-// getProfile()
-
- 
 // функция добавления карточки на сервер
 function addCardToServer(cardName, cardLink) {
   fetch(`${config.url}/cards`, {
-  method: 'POST',
+  method: 'POST',  
   headers: config.headers,
   body: JSON.stringify({
     name: `${cardName}`,
@@ -181,4 +185,14 @@ function addCardToServer(cardName, cardLink) {
 });
 }
 
-   
+// функция обновления количества лайков карточки на сервере
+function updateCardLikes(cardId, likesNumber) {
+  fetch(`${config.url}/cards`, {
+  method: 'PATCH',
+  headers: config.headers,
+  body: JSON.stringify({
+    _id: cardId,
+    i: profileAbout
+  })
+});
+} 

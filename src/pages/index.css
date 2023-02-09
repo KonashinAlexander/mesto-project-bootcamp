@@ -22,10 +22,13 @@
 @import url(../blocks/element/__picture/element__picture.css);
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__text/element__text.css);
+@import url(../blocks/element/__likes/element__likes.css);
+@import url(../blocks/element/__likes-number/element__likes-number.css);
 @import url(../blocks/element/__like-button/element__like-button.css);
 @import url(../blocks/element/__like-button/_color/element__like-button_color_white.css);
 @import url(../blocks/element/__like-button/_color/element__like-button_color_black.css);
 @import url(../blocks/element/__trash-button/element__trash-button.css);
+@import url(../blocks/element/__trash-button/_invisible/element__trash-button_invisible.css);
 
 
 
@@ -50,7 +53,7 @@
 @import url(../blocks/form/__button/_inactive/form__button_inactive.css);
 
 
-/* 
-* {
+
+/* * {
     outline: 1px solid yellowgreen;
 }  */
