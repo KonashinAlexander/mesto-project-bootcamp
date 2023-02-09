@@ -1,11 +1,12 @@
 
-import { loadCards, createCard, insertCard } from "./components/card.js";
+import { loadCards, cardId } from "./components/card.js";
 import { openPopup, closePopup } from './components/modal.js';
 import { checkPopupOpened } from './components/modal.js'
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
 export const popupCard = document.querySelector('#popup_card');
+export const popupCardRemove = document.querySelector('#popup_card-remove');
 export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
@@ -63,7 +64,7 @@ export function enchancePicture(image) {
   bigPicture.alt = image.alt;
 };
 
-// навешивем слушатели открытия попап на кнопки
+// навешиваем слушатели открытия попап на кнопки
 profileEditButton.addEventListener('click', e => openPopup(popupProfile));
 cardAddButton.addEventListener('click', e => openPopup(popupCard));
 
@@ -84,9 +85,6 @@ function submitProfile (evt) {
   getProfile();  
   closePopup(popupProfile);
   
-  // profileInputName.value = '';
-  // profileInputJob.value = '';
-
   enableValidation({
     formSelector: '.form',                          
     inputSelector: '.form__item',                   
@@ -196,3 +194,22 @@ function updateCardLikes(cardId, likesNumber) {
   })
 });
 } 
+
+
+// функция удаления карточки через submit формы
+
+const formCardRemove = document.forms.formCardRemove;
+
+function submitCardRemove () {
+  removeCardFromServer(cardId)
+  closePopup(popupCardRemove);
+}
+
+formCardRemove.addEventListener('submit', submitCardRemove);
+
+function removeCardFromServer(cardId) {
+  fetch(`${config.url}/cards/${cardId}`, {
+  method: 'DELETE',  
+  headers: config.headers  
+});
+}

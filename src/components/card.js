@@ -1,5 +1,6 @@
 // import { initialCards} from "./constants.js";
-import { enchancePicture, initialCards, profileId } from "../index.js";
+import { enchancePicture, initialCards, profileId, popupCardRemove } from "../index.js";
+import { openPopup } from "./modal.js";
 
 
 
@@ -30,7 +31,7 @@ export function createCard(cardName, cardLink, likes, id, owner) {
   
 
   cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
-    deleteCard(event.target);
+    deleteCard(event.target)
   });
 
   cardElement.querySelector('.element__like-button').addEventListener('click', event => {
@@ -64,17 +65,16 @@ export function loadCards() {
                             element.likes, 
                             element._id,
                             element.owner);
-    console.log(card)
     insertCard(card);    
   });
 }
 
 // // 4. функция кнопки удаления карточки//
+export let cardId = '';
 
 function deleteCard(but) {
-  // console.log(but.closest('.element'));
-  
-  but.closest('.element').remove();
+  openPopup(popupCardRemove)
+  return cardId = but.closest('.element').id;    
 };
 
 
