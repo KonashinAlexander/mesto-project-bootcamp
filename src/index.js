@@ -104,7 +104,7 @@ const pictureName = cardForm.querySelector('#input-place');
 const pictureUrl = cardForm.querySelector('#input-url');
 
 function submitCard (evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
 
   const likes = []
   

@@ -80,13 +80,15 @@ function getCardId(but) {
 
 // 5. функция смены цвета сердечка и добавления/удаления одного лайка //
 
-function changeColor(evt) {
+function changeColor(evt) {  
   
   cardId = evt.closest('.element').id;
   if (evt.classList.contains('element__like-button_color_black')) {
+    evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) - 1
     deleteLike(cardId);
     evt.classList.toggle('element__like-button_color_black');
   } else {
+    evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) + 1
     addLike(cardId);
     evt.classList.toggle('element__like-button_color_black');
   }
