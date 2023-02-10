@@ -1,5 +1,5 @@
 // import { initialCards} from "./constants.js";
-import { enchancePicture, initialCards, profileId, popupCardRemove } from "../index.js";
+import { enchancePicture, initialCards, profileId, popupCardRemove, addLike, deleteLike } from "../index.js";
 import { openPopup } from "./modal.js";
 
 
@@ -31,7 +31,7 @@ export function createCard(cardName, cardLink, likes, id, owner) {
   
 
   cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
-    deleteCard(event.target)
+    getCardId(event.target)
   });
 
   cardElement.querySelector('.element__like-button').addEventListener('click', event => {
@@ -69,26 +69,28 @@ export function loadCards() {
   });
 }
 
-// // 4. функция кнопки удаления карточки//
+// // 4. функция открытия попап формы удаления карточки//
 export let cardId = '';
 
-function deleteCard(but) {
+function getCardId(but) {
   openPopup(popupCardRemove)
   return cardId = but.closest('.element').id;    
 };
 
 
-// 5. функция смены цвета сердечка //
+// 5. функция смены цвета сердечка и добавления/удаления одного лайка //
 
 function changeColor(evt) {
-  evt.classList.toggle('element__like-button_color_black');
+  
+  cardId = evt.closest('.element').id;
+  if (evt.classList.contains('element__like-button_color_black')) {
+    deleteLike(cardId);
+    evt.classList.toggle('element__like-button_color_black');
+  } else {
+    addLike(cardId);
+    evt.classList.toggle('element__like-button_color_black');
+  }
+  
 };
 
-// 6 функция добавления числа
-
-// function addOneLike(event) {
-//   console.log(event.target.nextElementSibling)
-//   console.log(event.target.offsetParent)
-//   console.log(event.target)
-// }
 

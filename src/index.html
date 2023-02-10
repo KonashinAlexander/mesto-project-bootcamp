@@ -170,7 +170,37 @@
             </div>
 
 
-        </div>    
+        </div>  
+        
+        <!-- попап для смены аватара -->
+        <div class="popup" id="popup_avatar">
+          
+            <div class="popup__container">
+                <button type="button" class="popup__close-button"></button>
+                
+                <form name="formAvatar" class="form" novalidate>
+                    <h2 class="form__heading">Обновить аватар</h2>
+
+                    <input type="url" 
+                            name="avatar" 
+                            placeholder="Ссылка на картинку" 
+                            required 
+                            class="form__item" 
+                            id="input-url-avatar">
+                    <span class="input-url-avatar-error form__error-message"></span>
+
+                    <button type="submit" 
+                            value="Сохранить" 
+                            class="form__button"
+                            disabled>
+                            Сохранить</button>
+                </form>
+
+                
+            </div>
+
+
+        </div>   
          
         <!-- <script type="module" src="./index.js"></script> -->
     </body>

@@ -5,6 +5,7 @@ import { checkPopupOpened } from './components/modal.js'
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
+export const popupAvatar = document.querySelector('#popup_avatar');
 export const popupCard = document.querySelector('#popup_card');
 export const popupCardRemove = document.querySelector('#popup_card-remove');
 export const popupPicture = document.querySelector('#popup_picture');
@@ -106,8 +107,7 @@ function submitCard (evt) {
   evt.preventDefault();
 
   const likes = []
-  // const card = createCard(pictureName.value, pictureUrl.value, likes);
-  // insertCard(card);
+  
   addCardToServer(pictureName.value, pictureUrl.value);
   
   pictureUrl.value = '';
@@ -183,19 +183,6 @@ function addCardToServer(cardName, cardLink) {
 });
 }
 
-// функция обновления количества лайков карточки на сервере
-function updateCardLikes(cardId, likesNumber) {
-  fetch(`${config.url}/cards`, {
-  method: 'PATCH',
-  headers: config.headers,
-  body: JSON.stringify({
-    _id: cardId,
-    i: profileAbout
-  })
-});
-} 
-
-
 // функция удаления карточки через submit формы
 
 const formCardRemove = document.forms.formCardRemove;
@@ -213,3 +200,56 @@ function removeCardFromServer(cardId) {
   headers: config.headers  
 });
 }
+
+//функция добавления лайка
+
+export function addLike (cardId) {
+  fetch(`${config.url}/cards/likes/${cardId}`, {
+  method: 'PUT',  
+  headers: config.headers  
+  });
+  
+}
+
+//функция удаления лайка
+
+export function deleteLike (cardId) {
+  fetch(`${config.url}/cards/likes/${cardId}`, {
+  method: 'DELETE',  
+  headers: config.headers  
+  });
+  
+
+}
+
+// функция открытия формы добавления аватара
+
+function openPopupAvatar() {
+  openPopup(popupAvatar);
+}
+
+profileAvatar.addEventListener('click', openPopupAvatar);
+
+// функция изменения аватара
+
+const formAvatar = document.forms.formAvatar;
+const inputAvatarUrl = formAvatar.querySelector('#input-url-avatar');
+
+function submitNewAvatar () {
+  const newAvatar = inputAvatarUrl.value
+
+  fetch(`${config.url}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: newAvatar
+      
+      })
+    })
+
+
+  closePopup(popupAvatar);
+}
+
+formAvatar.addEventListener('submit', submitNewAvatar);
+
