@@ -68,8 +68,7 @@ export const addCardToServer = (cardName, cardLink) => {
     return Promise.reject(`Что-то пошло не так: ${res.status}`);
   })
   .then((c) => {
-    document.getElementById(cardId).remove();
-    
+    document.getElementById(cardId).remove();    
   })
   .catch(err => {console.log(err)});
   }
@@ -149,6 +148,10 @@ export const updateProfile = (profileName, profileAbout) => {
       }
       return Promise.reject(`Что-то пошло не так: ${res.status}`);
     })
+    .then((result) => {
+      profileTitle.textContent = result.name;
+      profileSubtitle.textContent = result.about;
+    })
     .catch(err => {console.log(err)});
   };
 
@@ -168,6 +171,9 @@ export const requestNewAvatar = (newAvatar) => {
             return res.json();
           }
           return Promise.reject(`Что-то пошло не так: ${res.status}`);
+          })
+          .then((result) => {
+            profileAvatar.src = result.avatar;
           })
       .catch(err => {console.log(err)})
 }

@@ -139,7 +139,8 @@ function openPopupAvatar() {
   openPopup(popupAvatar);
 }
 
-profileAvatar.addEventListener('click', openPopupAvatar);
+const avatarOverlay = document.querySelector('.profile__avatar-overlay');
+avatarOverlay.addEventListener('click', openPopupAvatar);
 
 // функция изменения аватара
 
@@ -147,11 +148,10 @@ const formAvatar = document.forms.formAvatar;
 const inputAvatarUrl = formAvatar.querySelector('#input-url-avatar');
 
 function submitNewAvatar () {
-
     const newAvatar = inputAvatarUrl.value;
+    requestNewAvatar(newAvatar);    
     closePopup(popupAvatar);
-    requestNewAvatar(newAvatar);
-      
+    formAvatar.reset();
 }
 
 formAvatar.addEventListener('submit', submitNewAvatar);
