@@ -1,7 +1,11 @@
 
-import { loadCards, cardId } from "./components/card.js";
-import { openPopup, closePopup } from './components/modal.js';
-import { checkPopupOpened } from './components/modal.js'
+import { loadCards, cardId, createCard, insertCard} from "./components/card.js";
+import { openPopup, closePopup, checkPopupOpened } from './components/modal.js';
+import {config, addCardToServer, requestNewAvatar,
+        removeCardFromServer, updateProfile, getCards, getProfile, profileId } from "./components/api.js";
+import { enableValidation } from './components/validate.js';
+
+import '../src/pages/index.css'; // импорт главного файла стилей
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
@@ -12,46 +16,13 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
 
-// функция получения данных профиля
-
-export let profileId ='';
-
-function getProfile () {
-  fetch(`${config.url}/users/me`, {headers: config.headers})
-  .then(data => data.json())
-  .then(profile => {    
-    profileTitle.textContent = profile.name;
-    profileSubtitle.textContent = profile.about;
-    profileAvatar.src = profile.avatar;
-    profileAvatar.alt = profile.name; 
-    return profileId = profile._id; // запишем id моего профиля
-    
-  })
-  .catch(err => console.error(err))
-  
-};
-
+// вызов функции получения данных профиля
 getProfile()
 
-// функция запроса на загрузку картинок с сервера и отрисовку на странице
-
-import {config} from './components/api.js';
-
+// вызов функции загрузки картинок
 export const initialCards = []
-function getCards () {
-  return fetch(`${config.url}/cards`, {headers: config.headers})
-  .then(data => data.json())
-  .then(list => {
-    list.forEach(card => {
-        initialCards.push(card)
-    })    
-    loadCards()
-  }) 
-  .catch(err => console.error(err))
-}
-
 getCards()
-
+   
 
 // функция открывает попап с большой картинкой
 const bigPicture = popupPicture.querySelector('#image');
@@ -71,9 +42,9 @@ cardAddButton.addEventListener('click', e => openPopup(popupCard));
 
 // редкатирование профиля
 const profileForm = document.forms.formProfile;
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
-const profileAvatar = document.querySelector('.profile__avatar');
+export const profileTitle = document.querySelector('.profile__title');
+export const profileSubtitle = document.querySelector('.profile__subtitle');
+export const profileAvatar = document.querySelector('.profile__avatar');
 const profileInputName = profileForm.querySelector('#input-name');
 const profileInputJob = profileForm.querySelector('#input-job');
 
@@ -81,7 +52,7 @@ profileInputName.value = profileTitle.textContent;
 profileInputJob.value = profileSubtitle.textContent;
 
 function submitProfile (evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
   updateProfile(profileInputName.value, profileInputJob.value);
   getProfile();  
   closePopup(popupProfile);
@@ -107,8 +78,13 @@ function submitCard (evt) {
   // evt.preventDefault();
 
   const likes = []
+  // const card = createCard(pictureName.value, pictureUrl.value, likes );
+  // insertCard(card);
   
   addCardToServer(pictureName.value, pictureUrl.value);
+
+  
+  // const response =  addCardToServer(pictureName.value, pictureUrl.value);
   
   pictureUrl.value = '';
   pictureName.value = '';
@@ -128,12 +104,7 @@ function submitCard (evt) {
 
 cardForm.addEventListener('submit', submitCard);
 
-
-// валидация всех полей всех форм
-import { enableValidation } from './components/validate.js';
-
 // включение валидации вызовом enableValidation
-
 enableValidation({
   formSelector: '.form',                          
   inputSelector: '.form__item',                   
@@ -150,39 +121,6 @@ popupProfile.addEventListener('click', e => checkPopupOpened(e.target));
 popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
 
 
-import '../src/pages/index.css'; // импорт главного файла стилей
-
-
-
-
-
-// функция обновления профиля пользователя на сервере
-function updateProfile(profileName, profileAbout) {
-  fetch(`${config.url}/users/me`, {
-  method: 'PATCH',
-  headers: config.headers,
-  body: JSON.stringify({
-    name: profileName, 
-    about: profileAbout
-    })
-  })
-  
-};
-
-// updateProfile()
-
-// функция добавления карточки на сервер
-function addCardToServer(cardName, cardLink) {
-  fetch(`${config.url}/cards`, {
-  method: 'POST',  
-  headers: config.headers,
-  body: JSON.stringify({
-    name: `${cardName}`,
-    link: `${cardLink}`
-  })
-});
-}
-
 // функция удаления карточки через submit формы
 
 const formCardRemove = document.forms.formCardRemove;
@@ -194,33 +132,6 @@ function submitCardRemove () {
 
 formCardRemove.addEventListener('submit', submitCardRemove);
 
-function removeCardFromServer(cardId) {
-  fetch(`${config.url}/cards/${cardId}`, {
-  method: 'DELETE',  
-  headers: config.headers  
-});
-}
-
-//функция добавления лайка
-
-export function addLike (cardId) {
-  fetch(`${config.url}/cards/likes/${cardId}`, {
-  method: 'PUT',  
-  headers: config.headers  
-  });
-  
-}
-
-//функция удаления лайка
-
-export function deleteLike (cardId) {
-  fetch(`${config.url}/cards/likes/${cardId}`, {
-  method: 'DELETE',  
-  headers: config.headers  
-  });
-  
-
-}
 
 // функция открытия формы добавления аватара
 
@@ -236,19 +147,11 @@ const formAvatar = document.forms.formAvatar;
 const inputAvatarUrl = formAvatar.querySelector('#input-url-avatar');
 
 function submitNewAvatar () {
-  const newAvatar = inputAvatarUrl.value
 
-  fetch(`${config.url}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: newAvatar
+    const newAvatar = inputAvatarUrl.value;
+    closePopup(popupAvatar);
+    requestNewAvatar(newAvatar);
       
-      })
-    })
-
-
-  closePopup(popupAvatar);
 }
 
 formAvatar.addEventListener('submit', submitNewAvatar);

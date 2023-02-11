@@ -1,6 +1,7 @@
 // import { initialCards} from "./constants.js";
-import { enchancePicture, initialCards, profileId, popupCardRemove, addLike, deleteLike } from "../index.js";
+import { enchancePicture, initialCards, popupCardRemove } from "../index.js";
 import { openPopup } from "./modal.js";
+import { addLike, deleteLike, profileId } from "./api.js";
 
 
 
@@ -54,7 +55,7 @@ export function createCard(cardName, cardLink, likes, id, owner) {
 
 // функция добавления карточки в массив карточек
 export function insertCard (card) {
-  cardGrid.append(card);
+  cardGrid.prepend(card);
 };
 
 // функция добавления массива карточек на страницу
@@ -80,17 +81,31 @@ function getCardId(but) {
 
 // 5. функция смены цвета сердечка и добавления/удаления одного лайка //
 
+function plusLikeNumber (evt) {
+  evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) + 1
+}
+
+function minusLikeNumber (evt) {
+  evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) - 1
+}
+
+function toggleColor(evt) {
+  evt.classList.toggle('element__like-button_color_black');
+}
+
 function changeColor(evt) {  
   
   cardId = evt.closest('.element').id;
   if (evt.classList.contains('element__like-button_color_black')) {
-    evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) - 1
+    minusLikeNumber(evt);
     deleteLike(cardId);
-    evt.classList.toggle('element__like-button_color_black');
+    toggleColor(evt);
+    
   } else {
-    evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) + 1
+    plusLikeNumber(evt);
     addLike(cardId);
-    evt.classList.toggle('element__like-button_color_black');
+    toggleColor(evt);
+    
   }
   
 };

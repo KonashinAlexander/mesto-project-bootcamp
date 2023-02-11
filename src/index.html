@@ -21,7 +21,10 @@
 
             <!-- профиль -->
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('./images/avatar.svg')%>" alt="картинка Кусто">
+                <div class="profile__avatar-container">
+                    <img class="profile__avatar" src="<%=require('./images/avatar.svg')%>" alt="картинка Кусто">
+                    <span class="profile__avatar-icon"></span>
+                </div>
                 <div class="profile__info">
                     <h1 class="profile__title">Жак-Ив Кусто</h1>
                     <button type="button" class="profile__edit-button"></button>
