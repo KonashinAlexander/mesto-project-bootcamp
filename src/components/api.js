@@ -1,6 +1,4 @@
-import { initialCards, profileTitle, profileSubtitle, profileAvatar, newAvatar } from "../index.js";
-import { insertCard, loadCards, createCard } from "./card.js";
-import { checkResponse } from "./util.js";
+import { request } from "./util.js";
 
 export const config = {
     url:'https://nomoreparties.co/v1/wbf-cohort-5',
@@ -10,35 +8,14 @@ export const config = {
     }
 };
 
-// // функция проверки ответа от сервера
-// function checkResponse(res) {
-//   if (res.ok) {
-//     return res.json();
-//   }
-//   return Promise.reject(`Что-то пошло не так: ${res.status}`);
-// }
-
-
-
-// функция запроса на загрузку картинок с сервера и отрисовки на странице
-
+// функция запроса карточек с сервера
 export const getCards = () => {
-  fetch(`${config.url}/cards`, {headers: config.headers})
-  .then(checkResponse)
-  .then(list => {    
-    list.forEach(card => {
-        initialCards.push(card)
-    })
-    loadCards();
-  }) 
-  .catch(err => console.error(err))
+  return request(`${config.url}/cards`, {headers: config.headers})  
 }
-
-
 
 // функция запроса добавления карточки на сервер
 export const addCardToServer = (cardName, cardLink) => {
-  return fetch(`${config.url}/cards`, {
+  return request(`${config.url}/cards`, {
     method: 'POST',  
     headers: config.headers,
     body: JSON.stringify({
@@ -46,34 +23,24 @@ export const addCardToServer = (cardName, cardLink) => {
       link: `${cardLink}`
     })
   })
-  .then(checkResponse)
-  .then(card => {
-    const newCard = createCard(card.name, card.link, card.likes, card._id, card.owner);
-    insertCard(newCard)
-  })
-  .catch(err => {console.log(err)})
 }
 
   // функция запроса удаления карточки через submit формы
 export const removeCardFromServer = (cardId) => {
-  return fetch(`${config.url}/cards/${cardId}`, {
+   return request(`${config.url}/cards/${cardId}`, {
     method: 'DELETE',  
     headers: config.headers  
   })
-  .then(checkResponse)
-  .then((c) => {document.getElementById(cardId).remove()})
-  .catch(err => {console.log(err)});
 }
 
 //функция запроса добавления лайка
 
 export const addLike = (cardId) => {
-  return fetch(`${config.url}/cards/likes/${cardId}`, {
+  return request(`${config.url}/cards/likes/${cardId}`, {
     method: 'PUT',  
     headers: config.headers  
   })
-  .then(checkResponse)
-  .catch(err => {console.log(err)})
+  // .catch(err => {console.log(err)})
   
 }
 
@@ -81,64 +48,42 @@ export const addLike = (cardId) => {
   //функция запроса удаления лайка
 
 export const deleteLike = (cardId) => {
-  return fetch(`${config.url}/cards/likes/${cardId}`, {
+  return request(`${config.url}/cards/likes/${cardId}`, {
     method: 'DELETE',  
     headers: config.headers  
   })
-  .then(checkResponse)
-  .catch(err => {console.log(err)})
+  // .catch(err => {console.log(err)})
     
 }
 
 // функция запроса получения данных профиля
-export let profileId ='';
 
 export const getProfile = () => {
-  return fetch(`${config.url}/users/me`, {headers: config.headers})
-  .then(checkResponse)
-  .then(profile => {    
-    profileTitle.textContent = profile.name;
-    profileSubtitle.textContent = profile.about;
-    profileAvatar.src = profile.avatar;
-    profileAvatar.alt = profile.name; 
-    return profileId = profile._id; // запишем id моего профиля    
-  })
-  .catch(err => console.error(err))
+  return request(`${config.url}/users/me`, {headers: config.headers})
 };
 
 
   // функция запроса обновления профиля пользователя на сервере
 export const updateProfile = (profileName, profileAbout) => {
-  return fetch(`${config.url}/users/me`, {
+  return request(`${config.url}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
       name: profileName, 
       about: profileAbout
     })
-  })
-  .then(checkResponse)
-  .then((result) => {
-    profileTitle.textContent = result.name;
-    profileSubtitle.textContent = result.about;
-  })
-  .catch(err => {console.log(err)});
+  }) 
 };
 
 
   // функция запроса изменения аватара
 export const requestNewAvatar = (newAvatar) => {
-  return fetch(`${config.url}/users/me/avatar`, {
+  return request(`${config.url}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({
       avatar: newAvatar      
     })
-  })
-  .then(checkResponse)
-  .then((result) => {
-    profileAvatar.src = result.avatar;
-  })
-  .catch(err => {console.log(err)})
+  });
 }
   

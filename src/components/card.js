@@ -1,7 +1,7 @@
 // import { initialCards} from "./constants.js";
-import { enchancePicture, initialCards, popupCardRemove } from "../index.js";
+import { enchancePicture, initialCards, popupCardRemove, profileId  } from "../index.js";
 import { openPopup } from "./modal.js";
-import { addLike, deleteLike, profileId } from "./api.js";
+import { addLike, deleteLike } from "./api.js";
 
 
 
@@ -98,12 +98,12 @@ function changeColor(evt) {
   cardId = evt.closest('.element').id;
   if (evt.classList.contains('element__like-button_color_black')) {
     minusLikeNumber(evt);
-    deleteLike(cardId);
+    deleteLike(cardId).catch(err => {console.log(err)})
     toggleColor(evt);
     
   } else {
     plusLikeNumber(evt);
-    addLike(cardId);
+    addLike(cardId).catch(err => {console.log(err)})
     toggleColor(evt);
     
   }
