@@ -30,7 +30,6 @@ const bigPictureText = popupPicture.querySelector('#text');
 
 export function enchancePicture(image) {
   openPopup(popupPicture);
-  popupPicture.classList.add('popup_opened-picture');
   bigPicture.src = image.src;
   bigPictureText.textContent = image.alt;
   bigPicture.alt = image.alt;
