@@ -18,7 +18,7 @@ export const profileEditButton = document.querySelector('.profile__edit-button')
 export const cardAddButton = document.querySelector('.card__add-button');
 
 // вызов функции получения данных профиля
-export let profileId ='';
+export let profileId = '';
 
 getProfile().then(profile => {    
   profileTitle.textContent = profile.name;

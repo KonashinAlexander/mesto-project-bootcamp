@@ -15,7 +15,7 @@ export function createCard(cardName, cardLink, likes, id, owner) {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const cardPicture = cardElement.querySelector('.element__picture');
   const cardText = cardElement.querySelector('.element__text');
-  let cardLikesNumber = cardElement.querySelector('.element__likes-number')
+  const cardLikesNumber = cardElement.querySelector('.element__likes-number')
     
   cardElement.setAttribute('id', id);
   cardElement.setAttribute('owner', owner._id);
