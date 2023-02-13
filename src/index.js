@@ -4,6 +4,7 @@ import { openPopup, closePopup, checkPopupOpened } from './components/modal.js';
 import { addCardToServer, requestNewAvatar,
         removeCardFromServer, updateProfile, getCards, getProfile } from "./components/api.js";
 import { enableValidation } from './components/validate.js';
+import { renderLoading } from "./components/util.js";
 
 import '../src/pages/index.css'; // импорт главного файла стилей
 
@@ -53,7 +54,13 @@ export function enchancePicture(image) {
 };
 
 // навешиваем слушатели открытия попап на кнопки
-profileEditButton.addEventListener('click', e => openPopup(popupProfile));
+
+profileEditButton.addEventListener('click', (e) => {
+  openPopup(popupProfile)
+  profileInputName.value = profileTitle.textContent;
+  profileInputJob.value = profileSubtitle.textContent;
+});
+
 cardAddButton.addEventListener('click', e => openPopup(popupCard));
 
 // редкатирование профиля
@@ -63,20 +70,22 @@ export const profileSubtitle = document.querySelector('.profile__subtitle');
 export const profileAvatar = document.querySelector('.profile__avatar');
 const profileInputName = profileForm.querySelector('#input-name');
 const profileInputJob = profileForm.querySelector('#input-job');
+const profileFormButton = profileForm.querySelector('.form__button');
 
 profileInputName.value = profileTitle.textContent;
 profileInputJob.value = profileSubtitle.textContent;
 
 function submitProfile (evt) {
-  // evt.preventDefault();
-  updateProfile(profileInputName.value, profileInputJob.value).then((result) => {
+  renderLoading(true, profileFormButton);
+
+  updateProfile(profileInputName.value, profileInputJob.value)
+  .then((result) => {
     profileTitle.textContent = result.name;
     profileSubtitle.textContent = result.about;
+    closePopup(popupProfile);
   })
-  .catch(err => {console.log(err)});
-
-  closePopup(popupProfile);
- 
+  .catch(err => {console.log(err)})
+  .finally(renderLoading(false, profileFormButton))
 }
 
 profileForm.addEventListener('submit', submitProfile);
@@ -85,24 +94,23 @@ profileForm.addEventListener('submit', submitProfile);
 const cardForm = document.forms.formCard;
 const pictureName = cardForm.querySelector('#input-place');
 const pictureUrl = cardForm.querySelector('#input-url');
+const cardFormButton = cardForm.querySelector('.form__button');
 
 function submitCard (evt) {
   // evt.preventDefault();
 
   const likes = []
-   
+  renderLoading(true, cardFormButton);
+
   addCardToServer(pictureName.value, pictureUrl.value)
   .then(card => {
     const newCard = createCard(card.name, card.link, card.likes, card._id, card.owner);
-    insertCard(newCard)
+    insertCard(newCard);
+    closePopup(popupCard);
+    evt.target.reset();
   })
   .catch(err => {console.log(err)})
-
-  pictureUrl.value = '';
-  pictureName.value = '';
-        
-  closePopup(popupCard);  
-   
+  .finally(renderLoading(false, cardFormButton))  
 };
 
 cardForm.addEventListener('submit', submitCard);
@@ -130,10 +138,11 @@ const formCardRemove = document.forms.formCardRemove;
 
 function submitCardRemove () {
   removeCardFromServer(cardId)
-  .then((c) => {document.getElementById(cardId).remove()})
-  .catch(err => {console.log(err)});
-
-  closePopup(popupCardRemove);
+  .then((c) => {
+    document.getElementById(cardId).remove();
+    closePopup(popupCardRemove);
+  })
+  .catch(err => {console.log(err)})  
 }
 
 formCardRemove.addEventListener('submit', submitCardRemove);
@@ -152,18 +161,22 @@ avatarOverlay.addEventListener('click', openPopupAvatar);
 
 const formAvatar = document.forms.formAvatar;
 const inputAvatarUrl = formAvatar.querySelector('#input-url-avatar');
+const formAvatarButton = formAvatar.querySelector('.form__button');
 
 function submitNewAvatar () {
     const newAvatar = inputAvatarUrl.value;
+    renderLoading(true, formAvatarButton);
 
     requestNewAvatar(newAvatar).then((result) => {
       profileAvatar.src = result.avatar;
+      closePopup(popupAvatar);
+      formAvatar.reset();
+      
     })
-    .catch(err => {console.log(err)});  
-
-    closePopup(popupAvatar);
-    formAvatar.reset();
+    .catch(err => {console.log(err)})
+    .finally(renderLoading(false, formAvatarButton));
 }
 
 formAvatar.addEventListener('submit', submitNewAvatar);
+
 
