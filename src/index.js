@@ -17,28 +17,25 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const cardAddButton = document.querySelector('.card__add-button');
 
-// вызов функции получения данных профиля
+// вызов функции получения данных профиля  и отрисовки карточек
 export let profileId = '';
+export const initialCards = [];
 
-getProfile().then(profile => {    
-  profileTitle.textContent = profile.name;
-  profileSubtitle.textContent = profile.about;
-  profileAvatar.src = profile.avatar;
-  profileAvatar.alt = profile.name; 
-  profileId = profile._id; // запишем id моего профиля    
-})
-.catch(err => console.error(err))
+Promise.all([getProfile(), getCards()])
+  .then(([profile, list]) => {
+    profileTitle.textContent = profile.name;
+    profileSubtitle.textContent = profile.about;
+    profileAvatar.src = profile.avatar;
+    profileAvatar.alt = profile.name; 
+    profileId = profile._id; 
 
-// вызов функции загрузки картинок
-export const initialCards = []
-
-getCards().then(list => {    
-  list.forEach(card => {
+    list.forEach(card => {
       initialCards.push(card)
+    })
+    loadCards();
+  
   })
-  loadCards();
-}) 
-.catch(err => console.error(err))
+  .catch(err => console.error(err));
 
    
 
@@ -89,6 +86,8 @@ function submitProfile (evt) {
 }
 
 profileForm.addEventListener('submit', submitProfile);
+
+
 
 // функция submit карточки при добавлении
 const cardForm = document.forms.formCard;

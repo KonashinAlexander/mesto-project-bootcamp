@@ -39,9 +39,7 @@ export const addLike = (cardId) => {
   return request(`${config.url}/cards/likes/${cardId}`, {
     method: 'PUT',  
     headers: config.headers  
-  })
-  // .catch(err => {console.log(err)})
-  
+  })  
 }
 
 
@@ -52,8 +50,6 @@ export const deleteLike = (cardId) => {
     method: 'DELETE',  
     headers: config.headers  
   })
-  // .catch(err => {console.log(err)})
-    
 }
 
 // функция запроса получения данных профиля

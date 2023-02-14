@@ -16,6 +16,8 @@ export function createCard(cardName, cardLink, likes, id, owner) {
   const cardPicture = cardElement.querySelector('.element__picture');
   const cardText = cardElement.querySelector('.element__text');
   const cardLikesNumber = cardElement.querySelector('.element__likes-number')
+  const cardLikeButton = cardElement.querySelector('.element__like-button');
+ 
     
   cardElement.setAttribute('id', id);
   cardElement.setAttribute('owner', owner._id);
@@ -25,11 +27,16 @@ export function createCard(cardName, cardLink, likes, id, owner) {
     cardElement.querySelector('.element__trash-button').setAttribute('disabled', true);
   }
 
+  likes.forEach((like) => {
+    if (profileId === like._id) {
+      cardLikeButton.classList.add('element__like-button_color_black');
+    } 
+  });
+
   cardPicture.src = cardLink;
   cardPicture.alt = cardName;
   cardText.textContent = cardName; 
   cardLikesNumber.textContent = likes.length;
-  
 
   cardElement.querySelector('.element__trash-button').addEventListener('click', event => {
     getCardId(event.target)
@@ -38,12 +45,6 @@ export function createCard(cardName, cardLink, likes, id, owner) {
   cardElement.querySelector('.element__like-button').addEventListener('click', event => {
     changeColor(event.target)
   });
-
-  // cardElement.querySelector('.element__like-button').addEventListener('click', event => {
-    // addOneLike(event)
-    // console.log(cardId)
-    // console.log(cardLikesNumber)
-  // });
 
   cardElement.querySelector('.element__picture').addEventListener('click', event => {
     enchancePicture(event.target);
@@ -66,6 +67,7 @@ export function loadCards() {
                             element.likes, 
                             element._id,
                             element.owner);
+    
     insertCard(card);    
   });
 }
@@ -81,33 +83,35 @@ function getCardId(but) {
 
 // 5. функция смены цвета сердечка и добавления/удаления одного лайка //
 
-function plusLikeNumber (evt) {
-  evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) + 1
-}
-
-function minusLikeNumber (evt) {
-  evt.nextElementSibling.textContent = Number(evt.nextElementSibling.textContent) - 1
-}
 
 function toggleColor(evt) {
   evt.classList.toggle('element__like-button_color_black');
 }
 
-function changeColor(evt) {  
+function toggleLikesNumber(evt, res) {
+  evt.closest('.element').querySelector('.element__likes-number').textContent = res.likes.length;
+  toggleColor(evt);
+}
+
+
+function changeColor(evt) {
   
   cardId = evt.closest('.element').id;
-  if (evt.classList.contains('element__like-button_color_black')) {
-    minusLikeNumber(evt);
-    deleteLike(cardId).catch(err => {console.log(err)})
-    toggleColor(evt);
-    
-  } else {
-    plusLikeNumber(evt);
-    addLike(cardId).catch(err => {console.log(err)})
-    toggleColor(evt);
-    
-  }
   
+  if (evt.classList.contains('element__like-button_color_black')) {
+    
+    deleteLike(cardId)
+    .then(res => {
+      toggleLikesNumber(evt, res);
+    })
+    .catch(err => {console.log(err)})
+       
+  } else {    
+    addLike(cardId)
+    .then(res => {
+      toggleLikesNumber(evt, res);
+    })
+    .catch(err => {console.log(err)})    
+  }  
 };
-
 
