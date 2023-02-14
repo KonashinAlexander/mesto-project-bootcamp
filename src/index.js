@@ -129,6 +129,7 @@ enableValidation({
 popupCard.addEventListener('click', e => checkPopupOpened(e.target));
 popupProfile.addEventListener('click', e => checkPopupOpened(e.target));
 popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
+popupAvatar.addEventListener('click', e => checkPopupOpened(e.target));
 
 
 // функция удаления карточки через submit формы
