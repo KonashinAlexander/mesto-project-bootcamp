@@ -74,18 +74,20 @@ profileInputJob.value = profileSubtitle.textContent;
 
 function submitProfile (evt) {
   renderLoading(true, profileFormButton);
-
+  
   updateProfile(profileInputName.value, profileInputJob.value)
   .then((result) => {
+    // renderLoading(true, profileFormButton);
     profileTitle.textContent = result.name;
     profileSubtitle.textContent = result.about;
     closePopup(popupProfile);
   })
   .catch(err => {console.log(err)})
-  .finally(renderLoading(false, profileFormButton))
+  .finally(() => {renderLoading(false, profileFormButton)})
 }
 
 profileForm.addEventListener('submit', submitProfile);
+// profileFormButton.addEventListener('click', renderLoading(true, profileFormButton))
 
 
 
@@ -103,13 +105,14 @@ function submitCard (evt) {
 
   addCardToServer(pictureName.value, pictureUrl.value)
   .then(card => {
+    // renderLoading(true, cardFormButton);
     const newCard = createCard(card.name, card.link, card.likes, card._id, card.owner);
     insertCard(newCard);
     closePopup(popupCard);
     evt.target.reset();
   })
   .catch(err => {console.log(err)})
-  .finally(renderLoading(false, cardFormButton))  
+  .finally(() => {renderLoading(false, cardFormButton)})  
 };
 
 cardForm.addEventListener('submit', submitCard);
@@ -166,15 +169,19 @@ const formAvatarButton = formAvatar.querySelector('.form__button');
 function submitNewAvatar () {
     const newAvatar = inputAvatarUrl.value;
     renderLoading(true, formAvatarButton);
-
+    console.log('before request new avatar')
     requestNewAvatar(newAvatar).then((result) => {
+      console.log('before start rendering')
+      // renderLoading(true, formAvatarButton);
       profileAvatar.src = result.avatar;
       closePopup(popupAvatar);
       formAvatar.reset();
-      
     })
     .catch(err => {console.log(err)})
-    .finally(renderLoading(false, formAvatarButton));
+    .finally(fin => {
+      console.log('before rendering back');
+      renderLoading(false, formAvatarButton);
+    })
 }
 
 formAvatar.addEventListener('submit', submitNewAvatar);
