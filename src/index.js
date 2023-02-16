@@ -77,7 +77,6 @@ function submitProfile (evt) {
   
   updateProfile(profileInputName.value, profileInputJob.value)
   .then((result) => {
-    // renderLoading(true, profileFormButton);
     profileTitle.textContent = result.name;
     profileSubtitle.textContent = result.about;
     closePopup(popupProfile);
@@ -97,22 +96,28 @@ const pictureName = cardForm.querySelector('#input-place');
 const pictureUrl = cardForm.querySelector('#input-url');
 const cardFormButton = cardForm.querySelector('.form__button');
 
-function submitCard (evt) {
-  // evt.preventDefault();
+function disableCardButton () {
+  cardFormButton.setAttribute('disabled', true);
+  cardFormButton.classList.add('form__button_inactive');
+}
 
+function submitCard (evt) {
   const likes = []
+  
   renderLoading(true, cardFormButton);
 
   addCardToServer(pictureName.value, pictureUrl.value)
   .then(card => {
-    // renderLoading(true, cardFormButton);
     const newCard = createCard(card.name, card.link, card.likes, card._id, card.owner);
     insertCard(newCard);
     closePopup(popupCard);
-    evt.target.reset();
   })
   .catch(err => {console.log(err)})
-  .finally(() => {renderLoading(false, cardFormButton)})  
+  .finally(() => {
+    renderLoading(false, cardFormButton);
+    evt.target.reset();
+    disableCardButton();
+  })  
 };
 
 cardForm.addEventListener('submit', submitCard);
@@ -169,17 +174,13 @@ const formAvatarButton = formAvatar.querySelector('.form__button');
 function submitNewAvatar () {
     const newAvatar = inputAvatarUrl.value;
     renderLoading(true, formAvatarButton);
-    console.log('before request new avatar')
     requestNewAvatar(newAvatar).then((result) => {
-      console.log('before start rendering')
-      // renderLoading(true, formAvatarButton);
       profileAvatar.src = result.avatar;
       closePopup(popupAvatar);
       formAvatar.reset();
     })
     .catch(err => {console.log(err)})
     .finally(fin => {
-      console.log('before rendering back');
       renderLoading(false, formAvatarButton);
     })
 }
