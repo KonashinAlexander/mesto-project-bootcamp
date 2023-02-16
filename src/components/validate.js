@@ -36,6 +36,11 @@ const setEventListeners = (formElement,
 
     toggleButtonState(inputList, buttonElement, inactiveButtonClass);
 
+    formElement.addEventListener('reset', () => { // собыите `reset` происходит когда вызывается `reset` у формы
+        setTimeout(() => {  // добавим таймаут, чтобы `toggleButtonState` вызвался уже после сохранения формы
+          toggleButtonState(inputList, buttonElement, inactiveButtonClass), 0 })
+      })
+
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', function () {
             isValid(formElement, inputElement, inputErrorClass);

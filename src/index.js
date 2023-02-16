@@ -96,11 +96,6 @@ const pictureName = cardForm.querySelector('#input-place');
 const pictureUrl = cardForm.querySelector('#input-url');
 const cardFormButton = cardForm.querySelector('.form__button');
 
-function disableCardButton () {
-  cardFormButton.setAttribute('disabled', true);
-  cardFormButton.classList.add('form__button_inactive');
-}
-
 function submitCard (evt) {
   const likes = []
   
@@ -116,7 +111,7 @@ function submitCard (evt) {
   .finally(() => {
     renderLoading(false, cardFormButton);
     evt.target.reset();
-    disableCardButton();
+    // disableButton(cardFormButton);
   })  
 };
 
@@ -134,10 +129,12 @@ enableValidation({
 
 
 // закрытие попап нажатием мышки
-popupCard.addEventListener('click', e => checkPopupOpened(e.target));
-popupProfile.addEventListener('click', e => checkPopupOpened(e.target));
-popupPicture.addEventListener('click', e => checkPopupOpened(e.target));
-popupAvatar.addEventListener('click', e => checkPopupOpened(e.target));
+
+const popups = document.querySelectorAll('.popup') 
+
+popups.forEach((popup)=>{
+  popup.addEventListener('mousedown', e => checkPopupOpened(e.target))
+})
 
 
 // функция удаления карточки через submit формы
@@ -177,13 +174,20 @@ function submitNewAvatar () {
     requestNewAvatar(newAvatar).then((result) => {
       profileAvatar.src = result.avatar;
       closePopup(popupAvatar);
-      formAvatar.reset();
     })
     .catch(err => {console.log(err)})
     .finally(fin => {
       renderLoading(false, formAvatarButton);
+      // disableButton(formAvatarButton);
+      formAvatar.reset();
     })
 }
+
+// функция деативации кнопки
+// function disableButton (button) {
+//   button.setAttribute('disabled', true);
+//   button.classList.add('form__button_inactive');
+// }
 
 formAvatar.addEventListener('submit', submitNewAvatar);
 
