@@ -36,6 +36,7 @@
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
+@import url(../blocks/footer/__country/footer__country.css);
 
 
 @import url(../blocks/popup/popup.css);
@@ -59,3 +60,4 @@
 /* * {
     outline: 1px solid yellowgreen;
 }  */
+

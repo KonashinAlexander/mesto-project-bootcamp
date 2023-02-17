@@ -7,6 +7,7 @@ import { enableValidation } from './components/validate.js';
 import { renderLoading } from "./components/util.js";
 
 import '../src/pages/index.css'; // импорт главного файла стилей
+import { internalIP } from "webpack-dev-server";
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
@@ -183,12 +184,7 @@ function submitNewAvatar () {
     })
 }
 
-// функция деативации кнопки
-// function disableButton (button) {
-//   button.setAttribute('disabled', true);
-//   button.classList.add('form__button_inactive');
-// }
-
 formAvatar.addEventListener('submit', submitNewAvatar);
 
+const country = document.querySelector('.footer__country');
 
