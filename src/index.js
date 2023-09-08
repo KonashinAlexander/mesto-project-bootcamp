@@ -7,7 +7,7 @@ import { enableValidation } from './components/validate.js';
 import { renderLoading } from "./components/util.js";
 
 import '../src/pages/index.css'; // импорт главного файла стилей
-import { internalIP } from "webpack-dev-server";
+
 
 // объявляем переменные
 export const popupProfile = document.querySelector('#popup_profile');
@@ -179,7 +179,6 @@ function submitNewAvatar () {
     .catch(err => {console.log(err)})
     .finally(fin => {
       renderLoading(false, formAvatarButton);
-      // disableButton(formAvatarButton);
       formAvatar.reset();
     })
 }
@@ -187,4 +186,5 @@ function submitNewAvatar () {
 formAvatar.addEventListener('submit', submitNewAvatar);
 
 const country = document.querySelector('.footer__country');
+country.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
